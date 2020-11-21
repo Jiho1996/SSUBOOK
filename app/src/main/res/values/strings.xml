@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SSUBOOK</string>
+    <string name="sign_up_intro">아직 회원이 아니시라면?</string>
+    <string name="sign_up">회원가입하기</string>
 </resources>
