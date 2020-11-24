@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorSoongsil">#00678F</color>
+    <color name="color_login_button">#00A3C9</color>
+    <color name="white">#FFFFFF</color>
+    <color name="sign_up_color">#F8F5F5</color>
 </resources>
