@@ -8,4 +8,5 @@
     <color name="color_login_button">#00A3C9</color>
     <color name="white">#FFFFFF</color>
     <color name="sign_up_color">#F8F5F5</color>
+    <color name="tab_color">#ABCACD</color>
 </resources>
