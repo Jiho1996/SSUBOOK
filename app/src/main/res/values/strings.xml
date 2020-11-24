@@ -3,5 +3,6 @@
     <string name="sign_up_intro">아직 회원이 아니시라면?</string>
     <string name="sign_up">회원가입하기</string>
     <string name="id">ID</string>
+    <string name="password">Password</string>
     <string name="phone_num">핸드폰 번호</string>
 </resources>

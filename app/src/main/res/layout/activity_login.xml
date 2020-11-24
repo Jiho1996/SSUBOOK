@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/main_constraint_layout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
@@ -27,8 +26,8 @@
             android:id="@+id/imageView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
             app:srcCompat="@drawable/login_ssubook" />
 
     </LinearLayout>
@@ -37,28 +36,25 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="80dp"
         android:layout_weight="1"
+        android:fontFamily="@font/paybooc_medium"
         android:text="@string/id"
         android:textSize="20sp"
-        android:layout_marginTop="80dp"
-        android:layout_marginLeft="50dp"
-        android:fontFamily="@font/paybooc_medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linear_logo" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="6dp"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="6dp"
         android:layout_marginRight="32dp"
-        android:hint="@string/phone_num"
-
+        android:layout_marginBottom="6dp"
         android:background="@drawable/sign_up_text_input"
+        android:hint="@string/phone_num"
         app:layout_constraintBottom_toTopOf="@+id/textView5"
-
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView4">
@@ -74,9 +70,29 @@
         android:layout_marginTop="180dp"
         android:layout_weight="1"
         android:fontFamily="@font/paybooc_medium"
-        android:text="@string/id"
+        android:text="@string/password"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linear_logo" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:background="@drawable/sign_up_text_input"
+        android:hint="@string/phone_num"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/editText"
+        android:layout_marginTop="160dp"
+      />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
