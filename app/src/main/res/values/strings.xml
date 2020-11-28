@@ -7,4 +7,5 @@
     <string name="password">Password</string>
     <string name="ko_password">비밀 번호</string>
     <string name="phone_num">핸드폰 번호</string>
+    <string name="verify_num">인증 번호</string>
 </resources>
