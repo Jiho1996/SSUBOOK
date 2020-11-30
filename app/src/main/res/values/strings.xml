@@ -5,7 +5,12 @@
     <string name="id">ID</string>
     <string name="login">로그인</string>
     <string name="password">Password</string>
+    <string name="password_ko">패스워드</string>
+    <string name="password_ko_verify">패스워드 확인</string>
     <string name="ko_password">비밀 번호</string>
     <string name="phone_num">핸드폰 번호</string>
     <string name="verify_num">인증 번호</string>
+    <string name="num_request">인증번호 요청</string>
+    <string name="nick_name">닉네임</string>
+    <string name="password_condition">Password는 최소 8자, 영문,한글 혼합</string>
 </resources>
