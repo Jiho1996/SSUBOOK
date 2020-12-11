@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Feed extends AppCompatActivity
 {
     private RecyclerView feedRecyclerView;
-    private RecyclerView.Adapter feedAdapter;
+    private FeedAdapter feedAdapter;
     private RecyclerView.LayoutManager feedManager;
 
     ArrayList<FeedItem> feedItemBundle = new ArrayList<>();

@@ -35,7 +35,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
     @Override
     public void onBindViewHolder(@NonNull FeedViewHolder holder, int position)
     {
+        //이미지 삽입 하는곳 (주석지우고 넣으삼)
+        FeedItem curItm = feedItemBundle.get(position);
 
+        holder.titleView.setText(curItm.getTitle());
+        holder.dateView.setText(curItm.getTimeString());
+        holder.priceView.setText(curItm.getPrice());
+        //이미지뷰는 Firebase 작업 후 구현
+        //holder.mainImageView.
     }
 
     @Override
@@ -57,7 +64,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
             titleView = v.findViewById(R.id.recyclerViewFeed_Title);
             dateView = v.findViewById(R.id.recyclerViewFeed_Date);
             priceView = v.findViewById(R.id.recyclerViewFeed_Price);
-            //ImageView = v.findViewById(R.id.recyclerViewFeed_Image);
+            mainImageView = v.findViewById(R.id.recyclerViewFeed_Image);
         }
     }
 }
