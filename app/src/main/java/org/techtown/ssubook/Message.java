@@ -25,7 +25,7 @@ public class Message extends AppCompatActivity
         msgActionbar.setDisplayHomeAsUpEnabled(false);   //상단바에 뒤로가기버튼 삭제
 
         //Firestore 데이터 읽어오기
-        
+
 
     }
 }
