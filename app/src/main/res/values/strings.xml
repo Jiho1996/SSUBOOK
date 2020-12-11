@@ -12,5 +12,7 @@
     <string name="verify_num">인증 번호</string>
     <string name="num_request">인증번호 요청</string>
     <string name="nick_name">닉네임</string>
+    <string name="service">서비스 이용약관</string>
+    <string name="sign_up_service">서비스 이용약관에 동의합니다.</string>
     <string name="password_condition">Password는 최소 8자, 영문,한글 혼합</string>
 </resources>

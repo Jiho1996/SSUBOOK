@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "446640646442",
+    "firebase_url": "https://ssu-usedbooktrade.firebaseio.com",
+    "project_id": "ssu-usedbooktrade",
+    "storage_bucket": "ssu-usedbooktrade.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:446640646442:android:1ad3c6a54d21d0eef9d653",
+        "android_client_info": {
+          "package_name": "org.techtown.ssubook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "446640646442-7adl4p4urr5ov9nsmf4tn9d28g73774r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.techtown.ssubook",
+            "certificate_hash": "0fad37355dc6fe6f086de7590b2c6884232bb0d1"
+          }
+        },
+        {
+          "client_id": "446640646442-o6m9ok51k9e283of8873ms9b1nuu9jgh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.techtown.ssubook",
+            "certificate_hash": "d69b42df329f1843d3a52d609bdcd25905b90e5f"
+          }
+        },
+        {
+          "client_id": "446640646442-dk41jgcb3s06hcdf3fo2r9aceed0nraf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBo4tif963MyExGJeQzX_4MU5nteh4AD5Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "446640646442-dk41jgcb3s06hcdf3fo2r9aceed0nraf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

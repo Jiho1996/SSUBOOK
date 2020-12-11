@@ -9,32 +9,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".searched_post"
-            android:theme="@style/TaeksTheme">
+        <activity android:name=".Message"></activity>
+        <activity android:name=".searched_post">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".search"
-            android:theme="@style/TaeksTheme">
+        <activity android:name=".search">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Post"
-            android:theme="@style/TaeksTheme">
+        <activity android:name=".Post">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Mypage"
-            android:theme="@style/TaeksTheme">
+        <activity android:name=".Mypage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,6 +39,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Feed">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
