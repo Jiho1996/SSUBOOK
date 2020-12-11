@@ -110,7 +110,7 @@ public class Post extends AppCompatActivity {
         spec.setIndicator(null, ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_assignment_24, null));
         spec.setContent(R.id.Intested_Tab);
         tabHost.addTab(spec);
-
+/*
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> paramAdapterView, View paramView, int paramInt, long paramLong) { //2번째: 클릭된 아이템 뷰, 세번째: 아이템 위치
@@ -125,7 +125,7 @@ public class Post extends AppCompatActivity {
                 startActivity(to_post);
             }
         });
-
+*/
         Intent intent = getIntent(); //마이 페이지에서 이 액티비티에 접근할 때 interested tab으로 보내주기 위해서.
         int action = intent.getIntExtra("activity", 0);
         if(action==1) {
@@ -134,7 +134,7 @@ public class Post extends AppCompatActivity {
         }
     }
 
-
+/*
     private ArrayList<Integer> find_my_post(ArrayList<BookItem> booklist, String UID){
         ArrayList<Integer> finds= new ArrayList();
 
@@ -173,5 +173,5 @@ public class Post extends AppCompatActivity {
         }
         return null;
     }
-
+*/
 }
