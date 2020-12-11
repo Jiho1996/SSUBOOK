@@ -21,6 +21,7 @@ public class searched_post extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searched_post);
+        setTitle("검색 결과");
 /*
         ActionBar ab = getSupportActionBar();
         ab.setTitle("검색 결과");

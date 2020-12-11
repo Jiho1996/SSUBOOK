@@ -15,6 +15,7 @@ public class Mypage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypage);
+        setTitle("마이페이지");
 /*
         ActionBar ab = getSupportActionBar();
         ab.setTitle("마이페이지");
@@ -33,8 +34,8 @@ public class Mypage extends AppCompatActivity {
 
         Intent intent = new Intent();
         ComponentName componentName = new ComponentName (
-                "com.example.soongsilbook",
-                "com.example.soongsilbook.Post");
+                "org.techtown.ssubook",
+                "org.techtown.ssubook.Post");
         intent.setComponent(componentName);
         intent.putExtra("activty", 0);
         startActivity(intent);
@@ -45,8 +46,8 @@ public class Mypage extends AppCompatActivity {
     {
         Intent intent = new Intent();
         ComponentName componentName = new ComponentName (
-                "com.example.soongsilbook",
-                "com.example.soongsilbook.Post");
+                "org.techtown.ssubook",
+                "org.techtown.ssubook.Post");
         intent.setComponent(componentName);
         intent.putExtra("activity", 1);
         startActivity(intent);
@@ -59,8 +60,8 @@ public class Mypage extends AppCompatActivity {
 
         Intent intent = new Intent();
         ComponentName componentName = new ComponentName (
-                "kr.co.company.b",
-                "kr.co.company.b.MainActivity");
+                "org.techtown.ssubook",
+                "org.techtown.ssubook.MainActivity");
         intent.setComponent(componentName);
         startActivity(intent);
 

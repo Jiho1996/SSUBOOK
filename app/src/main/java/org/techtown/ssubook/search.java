@@ -26,6 +26,7 @@ public class search extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        setTitle("검색");
 /*
         ActionBar ab = getSupportActionBar();
        ab.setTitle("검색");
