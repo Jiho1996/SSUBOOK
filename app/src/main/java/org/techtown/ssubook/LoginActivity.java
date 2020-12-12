@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button buttonLogIn;
     private static final String TAG = "LoginActivity";
     private TextView SignUpText;
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,8 @@ public class LoginActivity extends AppCompatActivity {
         editTextPassword = (EditText) findViewById(R.id.Text_password);
         SignUpText = (TextView) findViewById(R.id.textView3);
         buttonLogIn = (Button) findViewById(R.id.login_button);
+        actionBar = getSupportActionBar();
+        actionBar.hide();
 
         SignUpText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +88,8 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             Toast.makeText(LoginActivity.this, "로그인 성공.", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(LoginActivity.this, Mypage.class);
+                            //Intent intent = new Intent(LoginActivity.this, Mypage.class);
+                            Intent intent = new Intent(LoginActivity.this, Feed.class);
                             startActivity(intent);
 
                         } else {

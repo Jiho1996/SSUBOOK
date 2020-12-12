@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.Timestamp;
@@ -64,7 +66,7 @@ public class Feed extends AppCompatActivity
                         String title = dataMap.get("title").toString();   //제목
                         String author = dataMap.get("author").toString();  //use firebase UID, 저자
                         String UID = dataMap.get("UID").toString(); //게시글 UID
-                        int price = (int)dataMap.get("price");  //가격
+                        int price = Integer.parseInt(dataMap.get("price").toString());  //가격
                         Object timeStamp_o =  dataMap.get("timeStamp");
                         long timeStamp = ((Timestamp) timeStamp_o).getSeconds();
 
@@ -76,15 +78,26 @@ public class Feed extends AppCompatActivity
                         boolean naming = (boolean)dataMap.get("naming"); //true:이름있음, false:없음
                         boolean discolor = (boolean)dataMap.get("discolor");   //변색, true:있음, false:없음
                         bookItemBundle.add(new BookItem(title,author,UID,price,timeStamp,underbarTrace,writeTrace,bookCover,naming,discolor));
+                        Log.i("Feed","Data Added, title : "+title);
                     }
+                    Collections.sort(bookItemBundle);   //TimeStamp를 사용해 최신순 정렬
+                    feedAdapter.notifyDataSetChanged();
                 }
                 else
                 {
                     //작업 실패 시
+                    Log.w("Feed","Feed Get FAILED");
                 }
             }
+        }).addOnFailureListener(new OnFailureListener()
+        {
+            @Override
+            public void onFailure(@NonNull Exception e)
+            {
+                Log.w("Feed","Feed Get FAILED",e);
+            }
         });
-        Collections.sort(bookItemBundle);   //TimeStamp를 사용해 최신순 정렬
+
 
         feedRecyclerView.setHasFixedSize(true);
         feedManager = new LinearLayoutManager(this);
@@ -118,12 +131,18 @@ public class Feed extends AppCompatActivity
                         }
                         else
                         {
-                            feedActionbar.setTitle( (currentUser.getDisplayName()) + "회원님");
+                            if(currentUser.getDisplayName()!=null)
+                                feedActionbar.setTitle( (currentUser.getDisplayName()) + "회원님");
+                            else
+                                feedActionbar.setTitle("회원님");
                         }
                     }
                     else
                     {
-                        feedActionbar.setTitle( (currentUser.getDisplayName()) + "회원님");
+                        if(currentUser.getDisplayName()!=null)
+                            feedActionbar.setTitle( (currentUser.getDisplayName()) + "회원님");
+                        else
+                            feedActionbar.setTitle("회원님");
                     }
                 }
             });
@@ -163,6 +182,8 @@ public class Feed extends AppCompatActivity
                                 boolean discolor = (boolean)dataMap.get("discolor");   //변색, true:있음, false:없음
                                 bookItemBundle.add(new BookItem(title,author,UID,price,timeStamp,underbarTrace,writeTrace,bookCover,naming,discolor));
                             }
+                            Collections.sort(bookItemBundle);   //TimeStamp를 사용해 최신순 정렬
+                            feedAdapter.notifyDataSetChanged();
                         }
                         else
                         {
