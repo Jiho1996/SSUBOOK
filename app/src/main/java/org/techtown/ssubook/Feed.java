@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -57,7 +58,9 @@ public class Feed extends AppCompatActivity
                         String author = dataMap.get("author").toString();  //use firebase UID, 저자
                         String UID = dataMap.get("UID").toString(); //게시글 UID
                         int price = (int)dataMap.get("price");  //가격
-                        long timeStamp = (long)dataMap.get("timeStamp");  //올린시간
+                        Object timeStamp_o =  dataMap.get("timeStamp");
+                        long timeStamp = ((Timestamp) timeStamp_o).getSeconds();
+
 
                         //책 상태
                         String underbarTrace = dataMap.get("underbarTrace").toString();   //NONE, PENCIL, PEN

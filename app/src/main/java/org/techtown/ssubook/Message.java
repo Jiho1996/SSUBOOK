@@ -33,9 +33,7 @@ public class Message extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
-        msgActionbar = getSupportActionBar();
-        msgActionbar.setTitle("쪽지");    //상단바 타이틀 변경
-        msgActionbar.setDisplayHomeAsUpEnabled(false);   //상단바에 뒤로가기버튼 삭제
+
 
         //Firestore 데이터 읽어오기
         FirebaseFirestore firebaseDB = FirebaseFirestore.getInstance();

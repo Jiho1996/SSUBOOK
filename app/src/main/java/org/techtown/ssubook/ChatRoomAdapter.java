@@ -14,12 +14,11 @@ import java.util.ArrayList;
 
 public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRoomViewHolder>
 {
-    ArrayList<ChatRoomItem> ChatRoomItemBundle = new ArrayList<>();
+    ArrayList<BookItem> feedItemBundle = new ArrayList<>();
     Context mContext;
-
-    public ChatRoomAdapter(ArrayList<ChatRoomItem> bundle)
+    public ChatRoomAdapter(ArrayList<BookItem> bundle)
     {
-        this.ChatRoomItemBundle = bundle;
+        this.feedItemBundle = bundle;
     }
 
     @NonNull
@@ -28,7 +27,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
     {
         Context mContext = parent.getContext();
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.recycler_chat_room,parent,false);
+        View view = inflater.inflate(R.layout.recycler_feed_item,parent,false);
         ChatRoomViewHolder holder = new ChatRoomViewHolder(view);
         return holder;
     }
@@ -37,14 +36,11 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
     public void onBindViewHolder(@NonNull ChatRoomViewHolder holder, int position)
     {
         //이미지 삽입 하는곳 (주석지우고 넣으삼)
-        ChatRoomItem curItm = ChatRoomItemBundle.get(position);
+        BookItem curItm = feedItemBundle.get(position);
 
-        //ChatRoomItem으로 오므로 ChatRoom에서 최신 Chat 추출
-        ChatItem recentChat = curItm.getRecentChat();
-
-        holder.titleView.setText(recentChat.getSender());
-        holder.dateView.setText(recentChat.getTimeString());
-        holder.recentChatView.setText(recentChat.getContents());
+        holder.titleView.setText(curItm.getTitle());
+        holder.dateView.setText(curItm.getTimeString());
+        holder.priceView.setText(curItm.getPrice()+"원");
         //이미지뷰는 Firebase 작업 후 구현
         //holder.mainImageView.
     }
@@ -52,23 +48,23 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
     @Override
     public int getItemCount()
     {
-        return ChatRoomItemBundle.size();
+        return feedItemBundle.size();
     }
 
     public class ChatRoomViewHolder extends RecyclerView.ViewHolder
     {
         TextView titleView;
         TextView dateView;
-        TextView recentChatView;
+        TextView priceView;
         ImageView mainImageView;
 
         public ChatRoomViewHolder(@NonNull View v)
         {
             super(v);
-            titleView = v.findViewById(R.id.recycler_chatRoom_title);
-            dateView = v.findViewById(R.id.recycler_chatRoom_Date);
-            recentChatView = v.findViewById(R.id.recycler_chatRoom_mainText);
-            mainImageView = v.findViewById(R.id.recycler_chatRoom_image);
+            titleView = v.findViewById(R.id.recyclerViewChatRoom_Title);
+            dateView = v.findViewById(R.id.recyclerViewChatRoom_Date);
+            priceView = v.findViewById(R.id.recyclerViewChatRoom_Price);
+            mainImageView = v.findViewById(R.id.recyclerViewChatRoom_Image);
         }
     }
 }
