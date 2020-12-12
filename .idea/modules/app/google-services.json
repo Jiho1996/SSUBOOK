@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "446640646442-o6m9ok51k9e283of8873ms9b1nuu9jgh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.techtown.ssubook",
+            "certificate_hash": "d69b42df329f1843d3a52d609bdcd25905b90e5f"
+          }
+        },
+        {
           "client_id": "446640646442-dk41jgcb3s06hcdf3fo2r9aceed0nraf.apps.googleusercontent.com",
           "client_type": 3
         }
