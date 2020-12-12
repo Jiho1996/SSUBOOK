@@ -65,6 +65,18 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
             dateView = v.findViewById(R.id.recyclerViewFeed_Date);
             priceView = v.findViewById(R.id.recyclerViewFeed_Price);
             mainImageView = v.findViewById(R.id.recyclerViewFeed_Image);
+            //Todo : 클릭 이벤트 처리하기
+            /*
+            v.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+
+                }
+            });
+            */
+
         }
     }
 }

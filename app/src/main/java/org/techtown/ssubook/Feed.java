@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,6 +34,7 @@ public class Feed extends AppCompatActivity
     private RecyclerView.LayoutManager feedManager;
     private ActionBar feedActionbar;
     private SwipeRefreshLayout swipeLayout;
+    private FloatingActionButton floatingBtn;
     ArrayList<BookItem> bookItemBundle = new ArrayList<>();
 
     @Override
@@ -42,6 +45,7 @@ public class Feed extends AppCompatActivity
 
         swipeLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_layout);
         feedRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_feed);
+        floatingBtn = (FloatingActionButton) findViewById(R.id.floating_feed_btn);
         feedActionbar = getSupportActionBar();
 
         //FireStore 데이터 읽어오기
@@ -170,6 +174,14 @@ public class Feed extends AppCompatActivity
             }
         });
 
+        floatingBtn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                //Todo : WritePost 액티비티로 이동
+            }
+        });
 
 
     }
