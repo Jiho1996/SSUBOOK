@@ -61,10 +61,10 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
         public ChatRoomViewHolder(@NonNull View v)
         {
             super(v);
-            titleView = v.findViewById(R.id.recyclerViewChatRoom_Title);
-            dateView = v.findViewById(R.id.recyclerViewChatRoom_Date);
-            priceView = v.findViewById(R.id.recyclerViewChatRoom_Price);
-            mainImageView = v.findViewById(R.id.recyclerViewChatRoom_Image);
+            //titleView = v.findViewById(R.id.recyclerViewChatRoom_Title);
+            //dateView = v.findViewById(R.id.recyclerViewChatRoom_Date);
+           // priceView = v.findViewById(R.id.recyclerViewChatRoom_Price);
+            //mainImageView = v.findViewById(R.id.recyclerViewChatRoom_Image);
         }
     }
 }
