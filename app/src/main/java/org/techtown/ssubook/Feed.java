@@ -74,11 +74,8 @@ public class Feed extends AppCompatActivity
                 }
             }
         });
-
         Collections.sort(bookItemBundle);   //TimeStamp를 사용해 최신순 정렬
-        /*
-        정렬!!!!!
-         */
+
         feedRecyclerView.setHasFixedSize(true);
         feedManager = new LinearLayoutManager(this);
 

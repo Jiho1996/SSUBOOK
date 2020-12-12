@@ -1,5 +1,13 @@
 package org.techtown.ssubook;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -17,6 +25,29 @@ public class ChatItem implements Comparable<ChatItem>
         this.receiver=receiver;
         this.timeStamp=timeStamp;
         this.contents=contents;
+    }
+
+    public ChatItem(String chatUID)
+    {
+       FirebaseFirestore firebaseDB = FirebaseFirestore.getInstance();
+       firebaseDB.collection("ChatRoom").document(chatUID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+       {
+           @Override
+           public void onComplete(@NonNull Task<DocumentSnapshot> task)
+           {
+               if(task.isSuccessful())
+               {
+                   DocumentSnapshot document = task.getResult();
+                   if(document.exists())
+                   {
+                       sender=document.getData().get("sender").toString();
+                       receiver=document.getData().get("sender").toString();
+                       timeStamp=((Timestamp)document.getData().get("timeStamp")).getSeconds();
+                       contents=document.getData().get("sender").toString();
+                   }
+               }
+           }
+       });
     }
 
     public long getTimeStamp()
@@ -59,6 +90,7 @@ public class ChatItem implements Comparable<ChatItem>
     {
         this.sender = sender;
     }
+
     public String getTimeString() //String으로 TimeStamp 변환
     {
         Date date = new Date(timeStamp);
