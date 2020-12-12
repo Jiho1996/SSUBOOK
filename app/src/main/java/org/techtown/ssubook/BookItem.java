@@ -102,6 +102,16 @@ public class BookItem implements Comparable<BookItem>
         this.timeStamp = timeStamp;
     }
 
+    public void setContents(String contents)
+    {
+        this.contents = contents;
+    }
+
+    public String getContents()
+    {
+        return contents;
+    }
+
     public String getTimeString() //String으로 TimeStamp 변환
     {
         Date date = new Date(timeStamp);
