@@ -99,7 +99,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="130dp"
         android:layout_marginRight="32dp"
         android:background="@drawable/bt_shape_white"
         android:fontFamily="@font/paybooc_medium"
