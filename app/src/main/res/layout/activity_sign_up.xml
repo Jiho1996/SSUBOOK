@@ -80,6 +80,7 @@
                 android:background="@drawable/sign_up_text_input"
                 android:fontFamily="@font/paybooc_medium"
                 android:hint="@string/password_ko"
+                android:inputType="textPassword"
                 app:layout_constraintTop_toBottomOf="@id/nick_name">
 
             </EditText>
@@ -104,6 +105,7 @@
                 android:background="@drawable/sign_up_text_input"
                 android:fontFamily="@font/paybooc_medium"
                 android:hint="@string/password_ko_verify"
+                android:inputType="textPassword"
                 app:layout_constraintTop_toBottomOf="@id/password_condition">
 
             </EditText>

@@ -3,6 +3,7 @@ package org.techtown.ssubook;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
@@ -62,13 +63,8 @@ public class Mypage extends AppCompatActivity {
 
     public void onTermsButtonClick( View v )
     {
-        Toast.makeText( this, "Terms of Use 접근중", Toast.LENGTH_LONG ).show();
 
-        Intent intent = new Intent();
-        ComponentName componentName = new ComponentName (
-                "org.techtown.ssubook",
-                "org.techtown.ssubook.MainActivity");
-        intent.setComponent(componentName);
+        Intent intent = new Intent(Mypage.this, ServiceActivity.class);
         startActivity(intent);
 
     }

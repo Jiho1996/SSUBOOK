@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/service_constraint_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -33,25 +34,22 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="30dp"
             app:srcCompat="@drawable/ic_close" />
+
     </RelativeLayout>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="100dp">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <TextView
+        android:id="@+id/textView9"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginRight="28dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_bar" >
-        <WebView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </WebView>
-
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="@string/service_detail">
+    </TextView>
+</ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
