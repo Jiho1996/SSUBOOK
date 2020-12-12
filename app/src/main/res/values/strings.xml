@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SSUBOOK</string>
+    <string name="app_name">슈북</string>
     <string name="sign_up_intro">아직 회원이 아니시라면?</string>
     <string name="sign_up">회원가입하기</string>
     <string name="id">ID</string>
@@ -8,7 +8,7 @@
     <string name="password_ko">패스워드</string>
     <string name="password_ko_verify">패스워드 확인</string>
     <string name="ko_password">비밀 번호</string>
-    <string name="phone_num">핸드폰 번호</string>
+    <string name="email_num">이메일</string>
     <string name="verify_num">인증 번호</string>
     <string name="num_request">인증번호 요청</string>
     <string name="nick_name">닉네임</string>

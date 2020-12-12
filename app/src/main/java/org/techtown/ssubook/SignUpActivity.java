@@ -1,5 +1,7 @@
 package org.techtown.ssubook;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -22,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
-    private EditText editTextPhone;
+    private EditText editTextEmail;
     private EditText editTextPassword;
     private EditText editTextName;
     private EditText editTextPasswordConfirm;
@@ -36,26 +38,23 @@ public class SignUpActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        editTextPhone = (EditText) findViewById(R.id.phone_num);
+        editTextEmail = (EditText) findViewById(R.id.phone_num);
         editTextPassword = (EditText) findViewById(R.id.password);
         editTextName = (EditText) findViewById(R.id.nick_name);
         editTextPasswordConfirm = (EditText) findViewById(R.id.password2);
+
 
         buttonJoin = (Button) findViewById(R.id.button2);
         buttonJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (!editTextName.getText().toString().equals("")&&!editTextPhone.getText().toString().equals("")
+                if (!editTextName.getText().toString().equals("")&&!editTextEmail.getText().toString().equals("")
                         && !editTextPassword.getText().toString().equals("") && !editTextPasswordConfirm.getText().toString().equals((""))) {
                     // 번호와 비밀번호가 공백이 아닌 경우
-                    if (editTextPassword.equals(editTextPasswordConfirm)) {
-                        createUser(editTextPhone.getText().toString(), editTextPassword.getText().toString(), editTextName.getText().toString());
+                        createUser(editTextEmail.getText().toString(), editTextPassword.getText().toString(), editTextName.getText().toString());
                         Toast.makeText(SignUpActivity.this, "회원가입 완료.",
                                 Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(SignUpActivity.this, "비밀번호를 확인해주세요.", Toast.LENGTH_LONG).show();
-                    }
                 }
                 else {
                     // 번호와 비밀번호가 공백인 경우
@@ -71,6 +70,7 @@ public class SignUpActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
+
     }
 
     private void createUser(String phone, String password, String name) {
@@ -83,7 +83,8 @@ public class SignUpActivity extends AppCompatActivity {
                             // 회원가입 성공시
                             Log.d(TAG, "createUserWithPhone:success");
                             Toast.makeText(SignUpActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
-                            finish();
+                            Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                            startActivity(intent);
                         } else {
 
                             if(task.getException() != null ) {

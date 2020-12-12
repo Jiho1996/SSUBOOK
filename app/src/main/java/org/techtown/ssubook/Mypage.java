@@ -26,8 +26,11 @@ public class Mypage extends AppCompatActivity {
 
     public void onLogOutButtonClick( View v )
     {
-        Toast.makeText( this, "Log Out 성공", Toast.LENGTH_LONG ).show();
+
         FirebaseAuth.getInstance().signOut();
+        Toast.makeText( this, "Log Out 성공", Toast.LENGTH_LONG ).show();
+        Intent intent = new Intent(Mypage.this, LoginActivity.class);
+        startActivity(intent);
     }
 
 
