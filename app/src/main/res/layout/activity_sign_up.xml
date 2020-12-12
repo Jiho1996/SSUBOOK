@@ -39,8 +39,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:minHeight="840dp"
-            android:weightSum="650"
+            android:minHeight="750dp"
             android:orientation="vertical">
 
             <EditText
