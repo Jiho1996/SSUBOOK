@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class Mypage extends AppCompatActivity {
 
     @Override
@@ -24,7 +26,8 @@ public class Mypage extends AppCompatActivity {
 
     public void onLogOutButtonClick( View v )
     {
-        Toast.makeText( this, "Log Out 시도중", Toast.LENGTH_LONG ).show();
+        Toast.makeText( this, "Log Out 성공", Toast.LENGTH_LONG ).show();
+        FirebaseAuth.getInstance().signOut();
     }
 
 
