@@ -26,6 +26,7 @@ public class search extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        setTitle("검색");
 /*
         ActionBar ab = getSupportActionBar();
        ab.setTitle("검색");
@@ -57,8 +58,8 @@ public class search extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) { // 검색어 입력.
                 Intent intent = new Intent();
                 ComponentName componentName = new ComponentName (
-                        "com.example.soongsilbook",
-                        "com.example.soongsilbook.searched_post");
+                        "org.techtown.ssubook",
+                        "org.techtown.ssubook.searched_post");
                 intent.setComponent(componentName);
                 intent.putExtra("title", query);
                 startActivity(intent);
