@@ -3,11 +3,14 @@ package org.techtown.ssubook;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class Mypage extends AppCompatActivity {
 
@@ -24,7 +27,11 @@ public class Mypage extends AppCompatActivity {
 
     public void onLogOutButtonClick( View v )
     {
-        Toast.makeText( this, "Log Out 시도중", Toast.LENGTH_LONG ).show();
+
+        FirebaseAuth.getInstance().signOut();
+        Toast.makeText( this, "Log Out 성공", Toast.LENGTH_LONG ).show();
+        Intent intent = new Intent(Mypage.this, LoginActivity.class);
+        startActivity(intent);
     }
 
 
@@ -56,13 +63,8 @@ public class Mypage extends AppCompatActivity {
 
     public void onTermsButtonClick( View v )
     {
-        Toast.makeText( this, "Terms of Use 접근중", Toast.LENGTH_LONG ).show();
 
-        Intent intent = new Intent();
-        ComponentName componentName = new ComponentName (
-                "org.techtown.ssubook",
-                "org.techtown.ssubook.MainActivity");
-        intent.setComponent(componentName);
+        Intent intent = new Intent(Mypage.this, ServiceActivity.class);
         startActivity(intent);
 
     }
