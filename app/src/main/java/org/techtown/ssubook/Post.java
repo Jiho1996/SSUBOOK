@@ -126,7 +126,7 @@ public class Post extends AppCompatActivity
                         boolean naming = (boolean)dataMap.get("naming"); //true:이름있음, false:없음
                         boolean discolor = (boolean)dataMap.get("discolor");   //변색, true:있음, false:없음
                         String imageURL = dataMap.get("imageURL").toString();
-                        if(UID.equals("0"))//currentUser.getUid()
+                        if(author.equals(currentUser.getUid()))//currentUser.getUid()
                             bookItemBundle.add(new BookItem(title,author,UID,price,timeStamp,underbarTrace,writeTrace,bookCover,naming,discolor,imageURL));
                         Log.i("Feed","Data Added, title : "+title);
                     }

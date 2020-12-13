@@ -38,7 +38,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ChattingRoom extends AppCompatActivity
@@ -52,6 +54,8 @@ public class ChattingRoom extends AppCompatActivity
     ImageButton sendImageBtn;
     EditText textInput;
     String userUID;
+    String chatRoomID;
+    boolean haschatRoom;
     FirebaseFirestore firebaseDB = FirebaseFirestore.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -96,7 +100,7 @@ public class ChattingRoom extends AppCompatActivity
                                     timeStamp = Long.parseLong(dataMap.get("timeStamp").toString());
                                     contents = dataMap.get("contents").toString();
 
-                                    Log.w("Message", "ChatRoom Modified");
+                                    Log.w("Message", "Chat Modified");
                                     break;
                                 case REMOVED:
                                     break;
@@ -108,14 +112,15 @@ public class ChattingRoom extends AppCompatActivity
                                     timeStamp = Long.parseLong(dataMap.get("timeStamp").toString());
                                     contents = dataMap.get("contents").toString();
                                     chatUID = doc.getDocument().getId();
-                                    chatItemBundle.add(new ChatItem(sender, reciever, timeStamp, contents, chatUID));
-                                    Log.w("Message", "Chat Load");
+                                    chatItemBundle.add(new ChatItem(sender, reciever, timeStamp, contents, chatUID,currentUser.getUid()));
+                                    Log.w("Message", "Chat Load_A / Chat Count:"+chatItemBundle.size());
                             }
                         }
                         adapter.notifyDataSetChanged();
                     }
                 }
             });
+           /*
             chatRef.whereEqualTo("sender",intent_receiver).whereEqualTo("reciever",userUID).addSnapshotListener(new EventListener<QuerySnapshot>()
             {
                 @Override
@@ -156,14 +161,16 @@ public class ChattingRoom extends AppCompatActivity
                                     timeStamp = Long.parseLong(dataMap.get("timeStamp").toString());
                                     contents = dataMap.get("contents").toString();
                                     chatUID = doc.getDocument().getId();
-                                    chatItemBundle.add(new ChatItem(sender, reciever, timeStamp, contents, chatUID));
-                                    Log.w("Message", "Chat Load");
+                                    chatItemBundle.add(new ChatItem(sender, reciever, timeStamp, contents, chatUID,currentUser.getUid()));
+                                    Log.w("Message", "Chat Load_B / Chat Count: "+chatItemBundle.size());
                             }
                         }
                         adapter.notifyDataSetChanged();
                     }
                 }
             });
+            */
+
         }
 
 
@@ -172,6 +179,7 @@ public class ChattingRoom extends AppCompatActivity
 
         msgActionbar = getSupportActionBar();
         msgActionbar.setDisplayHomeAsUpEnabled(true);   //상단바에 뒤로가기버튼
+
         //상대방 닉네임 가져오기
         firebaseDB.collection("User").document(intent_receiver).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
         {
@@ -200,8 +208,6 @@ public class ChattingRoom extends AppCompatActivity
 
 
 
-        //msgActionbar.setTitle("쪽지");    //상단바 타이틀 변경
-
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_chatroom);
         recyclerView.setHasFixedSize(true);
 
@@ -225,20 +231,75 @@ public class ChattingRoom extends AppCompatActivity
                 if(textInput.getText().toString().length()==0)
                     return;
                 //메세지 전송
-                String sender = userUID;
-                String reciever = intent_receiver;
+                final String sender = userUID;
+                final String reciever = intent_receiver;
                 String contents = textInput.getText().toString();
 
                 Map<String,Object> chatData = new HashMap<>();
                 chatData.put("sender",sender);
                 chatData.put("reciever",reciever);
                 chatData.put("contents",contents);
+                chatData.put("timeStamp",new Date().getTime());
+
                 firebaseDB.collection("Chat").add(chatData).addOnSuccessListener(new OnSuccessListener<DocumentReference>()
                 {
                     @Override
-                    public void onSuccess(DocumentReference documentReference)
+                    public void onSuccess(final DocumentReference documentReference)
                     {
                         Log.w("ChatMessage","Success");
+
+                        if(chatRoomID==null)
+                        {
+                            firebaseDB.collection("ChatRoom").whereArrayContains("UserList", sender).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+                            {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task)
+                                {
+                                    if (task.isSuccessful())
+                                    {
+                                        haschatRoom=false;
+                                        for(QueryDocumentSnapshot document : task.getResult())
+                                        {
+                                            Map<String,Object> docData = document.getData();
+                                            List<String> UserList = (List<String>)docData.get("UserList");
+                                            if(UserList.contains(reciever))
+                                            {
+                                                chatRoomID = document.getId();
+                                                document.getReference().update("LastChat", documentReference.getId()).addOnSuccessListener(new OnSuccessListener<Void>()
+                                                {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid)
+                                                    {
+                                                        Log.i("ChattingRoom","Change LastChat");
+                                                    }
+                                                });
+                                                haschatRoom=true;
+                                                break;
+                                            }
+                                        }
+                                        if(!haschatRoom)
+                                        {
+                                            HashMap<String,Object> newChatRoom = new HashMap<>();
+                                            ArrayList<String> newSnR = new ArrayList<>();
+                                            newSnR.add(sender);
+                                            newSnR.add(reciever);
+                                            newChatRoom.put("LastChat",documentReference.getId());
+                                            newChatRoom.put("UserList",newSnR);
+                                            firebaseDB.collection("Chat").add(newSnR).addOnSuccessListener(new OnSuccessListener<DocumentReference>()
+                                           {
+                                               @Override
+                                               public void onSuccess(DocumentReference documentReference)
+                                               {
+
+                                                   chatRoomID = documentReference.getId();
+                                                   haschatRoom=true;
+                                               }
+                                           });
+                                        }
+                                    }
+                                }
+                            });
+                        }
                     }
                 }).addOnFailureListener(new OnFailureListener()
                 {
@@ -255,36 +316,7 @@ public class ChattingRoom extends AppCompatActivity
             }
         });
 
-        firebaseDB.collection("Chat").whereEqualTo("sender",userUID).whereEqualTo("reciever",intent_receiver).addSnapshotListener(new EventListener<QuerySnapshot>()
-        {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error)
-            {
-                if(error != null)
-                {
-                    Log.w("ChattingRoom", "Listen Failed",error);
-                }
-                else
-                {
-                    for (DocumentChange doc: value.getDocumentChanges())
-                    {
-                        if(doc.getType()==DocumentChange.Type.ADDED)
-                        {
-                            Map<String,Object> addedDate = doc.getDocument().getData();
-                            String sender = addedDate.get("sender").toString();
-                            String reciever = addedDate.get("reciever").toString();
-                            long timeStamp = Long.parseLong(addedDate.get("timeStamp").toString());
-                            String contents = addedDate.get("contents").toString();
-                            String chatUID = doc.getDocument().getId();
-                            ChatItem chatItem = new ChatItem(sender,reciever,timeStamp,contents,chatUID);
-                            chatItemBundle.add(chatItem);
 
-                        }
-                    }
-                    adapter.notifyDataSetChanged();
-                }
-            }
-        });
 
     }
 }

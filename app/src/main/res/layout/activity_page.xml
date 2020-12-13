@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <ImageView
+        android:id="@+id/page_image"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:padding="5dp"
-        android:background="#555555"
-        android:textSize="20dp" />
+        android:background="#555555" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,6 +19,7 @@
         android:layout_margin="10dp">
 
         <ImageView
+            android:id="@+id/page_profile_image"
             android:layout_width="57dp"
             android:layout_height="57dp"
             android:layout_gravity="left"
@@ -38,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:singleLine="true"
-                android:id="@+id/school_text"
+                android:id="@+id/titletext"
                 android:text="망령 99학번"
                 android:textSize="20dp" />
 
@@ -47,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:id="@+id/major_text"
+                android:id="@+id/authortext"
                 android:singleLine="true"
                 android:text="컴퓨터학부" />
         </LinearLayout>
@@ -88,6 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="없음"
+            android:id="@+id/row1col1"
             android:layout_weight="1"
             android:textSize="15dp" />
 
@@ -95,6 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="연필/샤프"
+            android:id="@+id/row1col2"
             android:layout_weight="1"
             android:textSize="15dp" />
 
@@ -102,6 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="볼펜/형광펜"
+            android:id="@+id/row1col3"
             android:layout_weight="1"
             android:textSize="15dp" />
 
@@ -123,6 +127,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="없음"
+        android:id="@+id/row2col1"
         android:layout_weight="1"
         android:textSize="15dp" />
 
@@ -130,6 +135,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="연필/샤프"
+        android:id="@+id/row2col2"
         android:layout_weight="1"
         android:textSize="15dp" />
 
@@ -138,6 +144,7 @@
         android:layout_height="wrap_content"
         android:text="볼펜/형광펜"
         android:layout_weight="1"
+        android:id="@+id/row2col3"
         android:textSize="15dp" />
 
 </LinearLayout>
@@ -158,6 +165,7 @@
             android:layout_width="64dp"
             android:layout_height="wrap_content"
             android:text="깨끗함"
+            android:id="@+id/row3col1"
             android:textSize="15dp" />
 
 
@@ -165,6 +173,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="깨끗하지않음"
+            android:id="@+id/row3col2"
             android:textSize="15dp" />
 
     </LinearLayout>
@@ -185,6 +194,7 @@
         android:layout_width="64dp"
         android:layout_height="wrap_content"
         android:text="없음"
+        android:id="@+id/row4col1"
         android:textSize="15dp" />
 
 
@@ -192,6 +202,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="있음"
+        android:id="@+id/row4col2"
         android:textSize="15dp" />
 
 </LinearLayout>
@@ -212,6 +223,7 @@
             android:layout_width="64dp"
             android:layout_height="wrap_content"
             android:text="없음"
+            android:id="@+id/row5col1"
             android:textSize="15dp" />
 
 
@@ -219,6 +231,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="있음"
+            android:id="@+id/row5col2"
             android:textSize="15dp" />
 
     </LinearLayout>
@@ -232,13 +245,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_gravity="bottom">
         <ImageView
             android:layout_width="57dp"
             android:layout_height="57dp"
             android:layout_gravity="left"
             android:adjustViewBounds="true"
-            android:src="@drawable/ic_baseline_star_24" />
+            android:src="@drawable/ic_baseline_star_24"
+            android:onClick="onInterested"/>
         <View
             android:layout_width="2dp"
             android:layout_height="match_parent"
@@ -249,11 +264,13 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textSize="40dp"
+            android:id="@+id/price"
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="10000원" />
 
         <Button
+            android:id="@+id/page_start_btn"
             android:layout_width="wrap_content"
             android:layout_height="57dp"
             android:text="쪽지로 거래 시작" />
@@ -268,5 +285,6 @@
         android:layout_height="60dp"
         android:text="hello."
         android:textSize="15dp"
+        android:id="@+id/contents"
         android:maxLines="3"/>
 </LinearLayout>

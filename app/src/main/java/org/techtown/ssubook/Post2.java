@@ -50,8 +50,8 @@ public class Post2 extends AppCompatActivity {
     private SwipeRefreshLayout swipeLayout;
     private FloatingActionButton floatingBtn;
     ArrayList<BookItem> bookItemBundle = new ArrayList<>();
-    ArrayList<String> interested = new ArrayList<>();
     String interested2;
+    List<String> interested;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -80,24 +80,16 @@ public class Post2 extends AppCompatActivity {
                         DocumentSnapshot document = task.getResult();
                         if(document.exists())
                         {
-                            String nickname = document.getData().get("nickname").toString();
-                            feedActionbar.setTitle( (nickname) + "회원님");
-                            interested2=document.getData().get("interested").toString();
+                            interested = (ArrayList<String>) document.getData().get("interested_post");
                         }
                         else
                         {
-                            if(currentUser.getDisplayName()!=null)
-                                feedActionbar.setTitle( (currentUser.getDisplayName()) + "회원님");
-                            else
-                                feedActionbar.setTitle("회원님");
+                           // if(currentUser.getDisplayName()!=null)
                         }
                     }
                     else
                     {
-                        if(currentUser.getDisplayName()!=null)
-                            feedActionbar.setTitle( (currentUser.getDisplayName()) + "회원님");
-                        else
-                            feedActionbar.setTitle("회원님");
+
                     }
                 }
             });
@@ -127,8 +119,9 @@ public class Post2 extends AppCompatActivity {
                         boolean naming = (boolean)dataMap.get("naming"); //true:이름있음, false:없음
                         boolean discolor = (boolean)dataMap.get("discolor");   //변색, true:있음, false:없음
                         String imageURL = dataMap.get("imageURL").toString();
-                        if(UID.equals("0"))//currentUser.getUid()
-                            bookItemBundle.add(new BookItem(title,author,UID,price,timeStamp,underbarTrace,writeTrace,bookCover,naming,discolor,imageURL));
+                        for(int i=0; i<interested.size(); i++)
+                            if(UID.equals(interested.get(i)))//currentUser.getUid()
+                                bookItemBundle.add(new BookItem(title,author,UID,price,timeStamp,underbarTrace,writeTrace,bookCover,naming,discolor,imageURL));
                         Log.i("Feed","Data Added, title : "+title);
                     }
                     Collections.sort(bookItemBundle);   //TimeStamp를 사용해 최신순 정렬

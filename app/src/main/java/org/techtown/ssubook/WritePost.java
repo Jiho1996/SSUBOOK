@@ -112,7 +112,8 @@ public class WritePost extends AppCompatActivity
         if(R.id.btn_write==item.getItemId())
         {
             //글쓰기 완료,  전송
-            if(!selectedImageUri.equals(Uri.EMPTY))
+
+            if(selectedImageUri!=null)
             {
                 //사진 있음. Storage 업로드
                 UUID imageUUID = UUID.randomUUID();
@@ -136,7 +137,7 @@ public class WritePost extends AppCompatActivity
                                 int price = Integer.parseInt(editText_price.getText().toString());
 
                                 String image_URL = uri.toString();
-
+                                final String contents = editText_contents.getText().toString();
                                 //책 상태
                                 String underbarTrace = "NONE";
                                 if (rB_underline_none.isChecked())
@@ -196,7 +197,7 @@ public class WritePost extends AppCompatActivity
                                     discolor = false;
                                 }
                                 Map<String, Object> postData = new HashMap<>();
-                                postData.put("UID", (Integer.toString((int) Math.random() * 1000000000)));
+                                postData.put("contents",contents);
                                 postData.put("title", title);
                                 postData.put("author", author);
                                 postData.put("price", price);
@@ -214,9 +215,18 @@ public class WritePost extends AppCompatActivity
                                     public void onSuccess(DocumentReference documentReference)
                                     {
                                         Log.w("WritePost", "Success_with_image");
-                                        Toast.makeText(WritePost.this, "게시글이 정상적으로 작성되었습니다.", Toast.LENGTH_LONG).show();
-                                        Intent intent = new Intent(WritePost.this, Feed.class);
-                                        startActivity(intent);
+                                        firebaseDB.collection("Post").document(documentReference.getId()).update("UID",documentReference.getId()).addOnSuccessListener(new OnSuccessListener<Void>()
+                                        {
+                                            @Override
+                                            public void onSuccess(Void aVoid)
+                                            {
+                                                Toast.makeText(WritePost.this, "게시글이 정상적으로 작성되었습니다.", Toast.LENGTH_LONG).show();
+                                                Intent intent = new Intent(WritePost.this, Feed.class);
+                                                startActivity(intent);
+
+                                            }
+                                        });
+
                                     }
                                 }).addOnFailureListener(new OnFailureListener()
                                 {
@@ -236,6 +246,121 @@ public class WritePost extends AppCompatActivity
             }
             else
             {
+                UUID imageUUID = UUID.randomUUID();
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+
+                String title = editText_title.getText().toString();
+                String author = "";
+                if (currentUser != null)
+                    author = currentUser.getUid();
+                //String UID = dataMap.get("UID").toString(); //게시글 UID, deprecated
+                int price = Integer.parseInt(editText_price.getText().toString());
+
+                String image_URL = "";
+                final String contents = editText_contents.getText().toString();
+                //책 상태
+                String underbarTrace = "NONE";
+                if (rB_underline_none.isChecked())
+                {
+                    underbarTrace = "NONE";
+                }
+                else if (rB_underline_pencil.isChecked())
+                {
+                    underbarTrace = "PENCIL";
+                }
+                else if (rB_underline_pen.isChecked())
+                {
+                    underbarTrace = "PEN";
+                }
+
+                String writeTrace = "NONE";
+                if (rB_write_none.isChecked())
+                {
+                    writeTrace = "NONE";
+                }
+                else if (rB_write_pencil.isChecked())
+                {
+                    writeTrace = "PENCIL";
+                }
+                else if (rB_write_pen.isChecked())
+                {
+                    writeTrace = "PEN";
+                }
+
+                String bookCover = "NONE";
+                if (rB_clean_true.isChecked())
+                {
+                    bookCover = "CLEAN";
+                }
+                else if (rB_clean_false.isChecked())
+                {
+                    bookCover = "DIRTY";
+                }
+
+                boolean naming = false;
+                if (rB_naming_true.isChecked())
+                {
+                    naming = true;
+                }
+                else if (rB_naming_false.isChecked())
+                {
+                    naming = false;
+                }
+
+                boolean discolor = false;
+                if (rB_discolor_true.isChecked())
+                {
+                    discolor = true;
+                }
+                else if (rB_discolor_false.isChecked())
+                {
+                    discolor = false;
+                }
+                Map<String, Object> postData = new HashMap<>();
+                postData.put("contents",contents);
+                postData.put("title", title);
+                postData.put("author", author);
+                postData.put("price", price);
+                postData.put("underbarTrace", underbarTrace);
+                postData.put("writeTrace", writeTrace);
+                postData.put("bookCover", bookCover);
+                postData.put("bookCover", bookCover);
+                postData.put("naming", naming);
+                postData.put("discolor", discolor);
+                postData.put("imageURL", image_URL);
+                postData.put("timeStamp", new Date().getTime());
+                firebaseDB.collection("Post").add(postData).addOnSuccessListener(new OnSuccessListener<DocumentReference>()
+                {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference)
+                    {
+                        Log.w("WritePost", "Success_with_image");
+                        firebaseDB.collection("Post").document(documentReference.getId()).update("UID",documentReference.getId()).addOnSuccessListener(new OnSuccessListener<Void>()
+                        {
+                            @Override
+                            public void onSuccess(Void aVoid)
+                            {
+                                Toast.makeText(WritePost.this, "게시글이 정상적으로 작성되었습니다.", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(WritePost.this, Feed.class);
+                                startActivity(intent);
+
+                            }
+                        });
+
+                    }
+                }).addOnFailureListener(new OnFailureListener()
+                {
+                    @Override
+                    public void onFailure(@NonNull Exception e)
+                    {
+                        Log.w("WritePost", "Failed", e);
+                        //Todo : Post 실패 시 Toast
+                    }
+                });
+
+
+
+
 
             }
             return true;
