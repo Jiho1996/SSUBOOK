@@ -23,6 +23,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Page extends AppCompatActivity {
     TextView title_text;
@@ -47,6 +48,7 @@ public class Page extends AppCompatActivity {
     TextView price_text;
     ImageView cameraImage,profileImage;
     Button startBtn;
+    String this_UID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +113,7 @@ public class Page extends AppCompatActivity {
                         title=document.getData().get("title").toString();
                         author=document.getData().get("author").toString();
                         UID=document.getData().get("UID").toString();
+                        this_UID = UID;
                         price=Integer.parseInt(document.getData().get("price").toString());
                         timeStamp=Long.parseLong(document.getData().get("timeStamp").toString());
 
@@ -171,6 +174,7 @@ public class Page extends AppCompatActivity {
                             }
                         });
                         Glide.with(getApplicationContext()).load(imageURL).into(cameraImage);
+                        //프로필
                         firebaseDB.collection("User").document(author).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
                         {
                             @Override
@@ -184,7 +188,8 @@ public class Page extends AppCompatActivity {
                                         String profilePhoto = snapshot.getData().get("photo").toString();
                                         if((!profilePhoto.equals(""))&&(profilePhoto.length()>0)&&(profilePhoto!=null))
                                             Glide.with(getApplicationContext()).load(profilePhoto).into(profileImage);
-
+                                        String nick = snapshot.getData().get("nickname").toString();
+                                        author_text.setText(nick);
                                     }
                                 }
                             }
@@ -204,6 +209,50 @@ public class Page extends AppCompatActivity {
     }
     public void onInterested( View v )
     {
-        Toast.makeText( this, "intersted에 추가되었습니다.", Toast.LENGTH_LONG ).show();
+        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if((this_UID!=null)&&(currentUser!=null))
+        {
+
+            final FirebaseFirestore firebaseDB = FirebaseFirestore.getInstance();
+            firebaseDB.collection("User").document(currentUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+            {
+                public void onComplete(@NonNull Task<DocumentSnapshot> task)
+                {
+                    if(task.isSuccessful())
+                    {
+                        DocumentSnapshot snapshot = task.getResult();
+                        if(snapshot.exists())
+                        {
+                            List<String> currentList = (List<String>)snapshot.getData().get("interested_post");
+                            if(!currentList.contains(this_UID))
+                            {
+                                currentList.add(this_UID);
+                                firebaseDB.collection("User").document(currentUser.getUid()).update("interested_post",currentList).addOnCompleteListener(new OnCompleteListener<Void>()
+                                {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task)
+                                    {
+                                        Toast.makeText(getApplicationContext(), "intersted에 추가되었습니다.", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
+                            else
+                            {
+                                currentList.remove(this_UID);
+                                firebaseDB.collection("User").document(currentUser.getUid()).update("interested_post",currentList).addOnCompleteListener(new OnCompleteListener<Void>()
+                                {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task)
+                                    {
+                                        Toast.makeText(getApplicationContext(), "intersted에서 삭제되었습니다.", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
+                        }
+                    }
+                }
+            });
+
+        }
     }
 }

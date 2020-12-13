@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ChattingRoom extends AppCompatActivity
@@ -53,6 +54,8 @@ public class ChattingRoom extends AppCompatActivity
     ImageButton sendImageBtn;
     EditText textInput;
     String userUID;
+    String chatRoomID;
+    boolean haschatRoom;
     FirebaseFirestore firebaseDB = FirebaseFirestore.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -228,8 +231,8 @@ public class ChattingRoom extends AppCompatActivity
                 if(textInput.getText().toString().length()==0)
                     return;
                 //메세지 전송
-                String sender = userUID;
-                String reciever = intent_receiver;
+                final String sender = userUID;
+                final String reciever = intent_receiver;
                 String contents = textInput.getText().toString();
 
                 Map<String,Object> chatData = new HashMap<>();
@@ -237,12 +240,66 @@ public class ChattingRoom extends AppCompatActivity
                 chatData.put("reciever",reciever);
                 chatData.put("contents",contents);
                 chatData.put("timeStamp",new Date().getTime());
+
                 firebaseDB.collection("Chat").add(chatData).addOnSuccessListener(new OnSuccessListener<DocumentReference>()
                 {
                     @Override
-                    public void onSuccess(DocumentReference documentReference)
+                    public void onSuccess(final DocumentReference documentReference)
                     {
                         Log.w("ChatMessage","Success");
+
+                        if(chatRoomID==null)
+                        {
+                            firebaseDB.collection("ChatRoom").whereArrayContains("UserList", sender).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+                            {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task)
+                                {
+                                    if (task.isSuccessful())
+                                    {
+                                        haschatRoom=false;
+                                        for(QueryDocumentSnapshot document : task.getResult())
+                                        {
+                                            Map<String,Object> docData = document.getData();
+                                            List<String> UserList = (List<String>)docData.get("UserList");
+                                            if(UserList.contains(reciever))
+                                            {
+                                                chatRoomID = document.getId();
+                                                document.getReference().update("LastChat", documentReference.getId()).addOnSuccessListener(new OnSuccessListener<Void>()
+                                                {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid)
+                                                    {
+                                                        Log.i("ChattingRoom","Change LastChat");
+                                                    }
+                                                });
+                                                haschatRoom=true;
+                                                break;
+                                            }
+                                        }
+                                        if(!haschatRoom)
+                                        {
+                                            HashMap<String,Object> newChatRoom = new HashMap<>();
+                                            ArrayList<String> newSnR = new ArrayList<>();
+                                            newSnR.add(sender);
+                                            newSnR.add(reciever);
+                                            newChatRoom.put("LastChat",documentReference.getId());
+                                            newChatRoom.put("UserList",newSnR);
+                                            firebaseDB.collection("Chat").add(newSnR).addOnSuccessListener(new OnSuccessListener<DocumentReference>()
+                                           {
+                                               @Override
+                                               public void onSuccess(DocumentReference documentReference)
+                                               {
+
+                                                   chatRoomID = documentReference.getId();
+                                                   haschatRoom=true;
+                                               }
+                                           });
+                                        }
+                                    }
+                                }
+                            });
+                        }
                     }
                 }).addOnFailureListener(new OnFailureListener()
                 {
