@@ -68,14 +68,14 @@ public class Post extends AppCompatActivity {
                         String author = dataMap.get("author").toString();  //use firebase UID, 저자
                         String UID = dataMap.get("UID").toString(); //게시글 UID
                         int price = (int)dataMap.get("price");  //가격
-                        long timeStamp = (long)dataMap.get("timeStamp");  //올린시간
+                        long timeStamp = Long.parseLong(dataMap.get("timeStamp").toString());  //올린시간
 
                         String underbarTrace = dataMap.get("underbarTrace").toString();   //NONE, PENCIL, PEN
                         String writeTrace = dataMap.get("writeTrace").toString();  //NONE, PENCIL, PEN
                         String bookCover = dataMap.get("bookCover").toString(); //CLEAN, DIRTY
                         boolean naming = (boolean)dataMap.get("naming"); //true:이름있음, false:없음
                         boolean discolor = (boolean)dataMap.get("discolor");   //변색, true:있음, false:없음
-                        booklist.add(new BookItem(title,author,UID,price,timeStamp,underbarTrace,writeTrace,bookCover,naming,discolor));
+                        //booklist.add(new BookItem(title,author,UID,price,timeStamp,underbarTrace,writeTrace,bookCover,naming,discolor));
                     }
                 }
             }

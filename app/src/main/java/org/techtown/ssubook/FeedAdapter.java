@@ -10,6 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder>
@@ -41,7 +45,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         holder.titleView.setText(curItm.getTitle());
         holder.dateView.setText(curItm.getTimeString());
         holder.priceView.setText(curItm.getPrice()+"원");
-        //이미지뷰는 Firebase 작업 후 구현
+        //이미지뷰는 Firebase+Glide
+        Glide.with(holder.mainImageView.getContext()).load(curItm.getImageURL()).into(holder.mainImageView);
         //holder.mainImageView.
     }
 

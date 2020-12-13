@@ -85,8 +85,7 @@ public class ChattingRoom extends AppCompatActivity
                             Map<String,Object> dataMap = document.getData();
                             String sender = dataMap.get("sender").toString();
                             String reciever = dataMap.get("reciever").toString();
-                            Object timeStamp_o = dataMap.get("timeStamp");
-                            long timeStamp = ((Timestamp) timeStamp_o).getSeconds();
+                            long timeStamp = Long.parseLong(dataMap.get("timeStamp").toString());
                             String contents = dataMap.get("contents").toString();
 
                             ChatItem chatItem = new ChatItem(sender,reciever,timeStamp,contents);
@@ -206,8 +205,7 @@ public class ChattingRoom extends AppCompatActivity
                             Map<String,Object> addedDate = doc.getDocument().getData();
                             String sender = addedDate.get("sender").toString();
                             String reciever = addedDate.get("reciever").toString();
-                            Object timeStamp_o = addedDate.get("timeStamp");
-                            long timeStamp = ((Timestamp) timeStamp_o).getSeconds();
+                            long timeStamp = Long.parseLong(addedDate.get("timeStamp").toString());
                             String contents = addedDate.get("contents").toString();
 
                             ChatItem chatItem = new ChatItem(sender,reciever,timeStamp,contents);

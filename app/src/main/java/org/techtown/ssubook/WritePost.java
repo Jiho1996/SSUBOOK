@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,6 +33,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -40,7 +42,7 @@ public class WritePost extends AppCompatActivity
 {
     final int GET_GALLARY_IMAGE = 200;
     ImageView pictureView;
-
+    StorageReference imageRef;
     EditText editText_title;
     EditText editText_price;
     EditText editText_contents;
@@ -106,6 +108,7 @@ public class WritePost extends AppCompatActivity
     {
         final FirebaseFirestore firebaseDB = FirebaseFirestore.getInstance();
         final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
         if(R.id.btn_write==item.getItemId())
         {
             //글쓰기 완료,  전송
@@ -114,111 +117,125 @@ public class WritePost extends AppCompatActivity
                 //사진 있음. Storage 업로드
                 UUID imageUUID = UUID.randomUUID();
                 FirebaseStorage storage = FirebaseStorage.getInstance();
-                StorageReference imageRef = storage.getReference().child("Images/"+imageUUID+"-"+selectedImageUri.getLastPathSegment());
-                imageRef.putFile(selectedImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>()
+                imageRef = storage.getReference().child("Images/"+imageUUID+"-"+selectedImageUri.getLastPathSegment());
+                imageRef.putFile(selectedImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
                 {
                     @Override
-                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task)
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
                     {
-                        final Task<Uri> imageURL = task.getResult().getStorage().getDownloadUrl();
-                        while(!imageURL.isComplete());
-
-                        String title = editText_title.getText().toString();
-                        String author = "";
-                        if(currentUser!=null)
-                            author = currentUser.getUid();
-                        //String UID = dataMap.get("UID").toString(); //게시글 UID, deprecated
-                        int price = Integer.parseInt(editText_price.getText().toString());
-
-
-                        //책 상태
-                        String underbarTrace = "NONE";
-                        if(rB_underline_none.isChecked())
-                        {
-                            underbarTrace = "NONE";
-                        }
-                        else if(rB_underline_pencil.isChecked())
-                        {
-                            underbarTrace = "PENCIL";
-                        }
-                        else if(rB_underline_pen.isChecked())
-                        {
-                            underbarTrace = "PEN";
-                        }
-
-                        String writeTrace = "NONE";
-                        if(rB_write_none.isChecked())
-                        {
-                            writeTrace = "NONE";
-                        }
-                        else if(rB_write_pencil.isChecked())
-                        {
-                            writeTrace = "PENCIL";
-                        }
-                        else if(rB_write_pen.isChecked())
-                        {
-                            writeTrace = "PEN";
-                        }
-
-                        String bookCover = "NONE";
-                        if(rB_clean_true.isChecked())
-                        {
-                            bookCover = "CLEAN";
-                        }
-                        else if(rB_clean_false.isChecked())
-                        {
-                            bookCover = "DIRTY";
-                        }
-
-                        boolean naming = false;
-                        if(rB_naming_true.isChecked())
-                        {
-                            naming = true;
-                        }
-                        else if(rB_naming_false.isChecked())
-                        {
-                            naming = false;
-                        }
-
-                        boolean discolor = false;
-                        if(rB_discolor_true.isChecked())
-                        {
-                            discolor = true;
-                        }
-                        else if(rB_discolor_false.isChecked())
-                        {
-                            discolor = false;
-                        }
-                        Map<String,Object> postData = new HashMap<>();
-                        postData.put("title",title);
-                        postData.put("author",author);
-                        postData.put("price",price);
-                        postData.put("underbarTrace",underbarTrace);
-                        postData.put("writeTrace",writeTrace);
-                        postData.put("bookCover",bookCover);
-                        postData.put("bookCover",bookCover);
-                        postData.put("naming",naming);
-                        postData.put("discolor",discolor);
-                        firebaseDB.collection("Post").add(postData).addOnSuccessListener(new OnSuccessListener<DocumentReference>()
+                        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
                         {
                             @Override
-                            public void onSuccess(DocumentReference documentReference)
+                            public void onSuccess(Uri uri)
                             {
-                                Log.w("WritePost","Success");
-                                //TODO : Post 작성 후 성공 시 화면 전환
-                            }
-                        }).addOnFailureListener(new OnFailureListener()
-                        {
-                            @Override
-                            public void onFailure(@NonNull Exception e)
-                            {
-                                Log.w("WritePost","Success",e);
-                                //Todo : Post 실패 시 Toast
+                                String title = editText_title.getText().toString();
+                                String author = "";
+                                if (currentUser != null)
+                                    author = currentUser.getUid();
+                                //String UID = dataMap.get("UID").toString(); //게시글 UID, deprecated
+                                int price = Integer.parseInt(editText_price.getText().toString());
+
+                                String image_URL = uri.toString();
+
+                                //책 상태
+                                String underbarTrace = "NONE";
+                                if (rB_underline_none.isChecked())
+                                {
+                                    underbarTrace = "NONE";
+                                }
+                                else if (rB_underline_pencil.isChecked())
+                                {
+                                    underbarTrace = "PENCIL";
+                                }
+                                else if (rB_underline_pen.isChecked())
+                                {
+                                    underbarTrace = "PEN";
+                                }
+
+                                String writeTrace = "NONE";
+                                if (rB_write_none.isChecked())
+                                {
+                                    writeTrace = "NONE";
+                                }
+                                else if (rB_write_pencil.isChecked())
+                                {
+                                    writeTrace = "PENCIL";
+                                }
+                                else if (rB_write_pen.isChecked())
+                                {
+                                    writeTrace = "PEN";
+                                }
+
+                                String bookCover = "NONE";
+                                if (rB_clean_true.isChecked())
+                                {
+                                    bookCover = "CLEAN";
+                                }
+                                else if (rB_clean_false.isChecked())
+                                {
+                                    bookCover = "DIRTY";
+                                }
+
+                                boolean naming = false;
+                                if (rB_naming_true.isChecked())
+                                {
+                                    naming = true;
+                                }
+                                else if (rB_naming_false.isChecked())
+                                {
+                                    naming = false;
+                                }
+
+                                boolean discolor = false;
+                                if (rB_discolor_true.isChecked())
+                                {
+                                    discolor = true;
+                                }
+                                else if (rB_discolor_false.isChecked())
+                                {
+                                    discolor = false;
+                                }
+                                Map<String, Object> postData = new HashMap<>();
+                                postData.put("UID", (Integer.toString((int) Math.random() * 1000000000)));
+                                postData.put("title", title);
+                                postData.put("author", author);
+                                postData.put("price", price);
+                                postData.put("underbarTrace", underbarTrace);
+                                postData.put("writeTrace", writeTrace);
+                                postData.put("bookCover", bookCover);
+                                postData.put("bookCover", bookCover);
+                                postData.put("naming", naming);
+                                postData.put("discolor", discolor);
+                                postData.put("imageURL", image_URL);
+                                postData.put("timeStamp", new Date().getTime());
+                                firebaseDB.collection("Post").add(postData).addOnSuccessListener(new OnSuccessListener<DocumentReference>()
+                                {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference)
+                                    {
+                                        Log.w("WritePost", "Success_with_image");
+                                        Toast.makeText(WritePost.this, "게시글이 정상적으로 작성되었습니다.", Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(WritePost.this, Feed.class);
+                                        startActivity(intent);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener()
+                                {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e)
+                                    {
+                                        Log.w("WritePost", "Failed", e);
+                                        //Todo : Post 실패 시 Toast
+                                    }
+                                });
+
                             }
                         });
-
                     }
                 });
+
+            }
+            else
+            {
 
             }
             return true;
