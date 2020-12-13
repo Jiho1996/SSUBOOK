@@ -57,7 +57,7 @@ public class ListViewAdapter extends BaseAdapter { //실습을 기반으로 작�
     }
 
     public void addItem(Drawable icon, String title, String desc) { //firebase에서 불러온 데이터 하나를 저장하는 법.
-        ListViewItem item = new ListViewItem();
+        ListViewItem item = new ListViewItem(icon, title, desc);
 
         item.setIcon(icon);
         item.setTitle(title);

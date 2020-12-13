@@ -19,10 +19,7 @@ public class Mypage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypage);
         setTitle("마이페이지");
-/*
-        ActionBar ab = getSupportActionBar();
-        ab.setTitle("마이페이지");
-*/
+
     }
 
     public void onLogOutButtonClick( View v )
@@ -63,10 +60,8 @@ public class Mypage extends AppCompatActivity {
 
     public void onTermsButtonClick( View v )
     {
-
         Intent intent = new Intent(Mypage.this, ServiceActivity.class);
         startActivity(intent);
-
     }
 
 }

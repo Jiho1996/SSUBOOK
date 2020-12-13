@@ -26,4 +26,9 @@ public class ListViewItem {
     public String getDesc() {
         return this.descStr ;
     }
+    public ListViewItem(Drawable iconDrawable, String titleStr, String descStr){
+        this.iconDrawable=iconDrawable;
+        this.titleStr=titleStr;
+        this.descStr=descStr;
+    }
 }

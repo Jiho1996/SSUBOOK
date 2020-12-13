@@ -27,28 +27,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".searched_post">
+        <activity android:name=".searched_post"
+            android:theme="@style/TaekTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".search">
+        <activity android:name=".search"
+            android:theme="@style/TaekTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Post">
+        <activity android:name=".Post"
+            android:theme="@style/TaekTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Mypage">
+        <activity android:name=".Mypage"
+            android:theme="@style/TaekTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
