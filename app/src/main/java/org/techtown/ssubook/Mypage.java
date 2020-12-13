@@ -40,12 +40,42 @@ public class Mypage extends AppCompatActivity {
 
 
         firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        final FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         //Log.d("abc", currentUser.getUid());
 
 
-        TextView textView=(TextView)findViewById(R.id.name_text);
-        textView.setText("김택민");
+        final TextView textView=(TextView)findViewById(R.id.name_text);
+        FirebaseFirestore firebaseDB = FirebaseFirestore.getInstance();
+        if(currentUser != null)
+        {
+            //DB에서 별명 가져오기
+            firebaseDB.collection("User").document(currentUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+            {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task)
+                {
+                    if(task.isSuccessful())
+                    {
+                        DocumentSnapshot document = task.getResult();
+                        if(document.exists())
+                        {
+                            String nickname = document.getData().get("nickname").toString();
+                            textView.setText(nickname);
+                        }
+                        else
+                        {
+                            textView.setText("회원님");
+
+                        }
+                    }
+                    else
+                    {
+                        textView.setText("회원님");
+                    }
+                }
+            });
+        }
+
         //Log.d("abc", currentUser.getEmail());
         //textView.setText(currentUser.getUid());
 

@@ -113,7 +113,7 @@ public class WritePost extends AppCompatActivity
         {
             //글쓰기 완료,  전송
 
-            if(!Uri.EMPTY.equals(selectedImageUri))
+            if(selectedImageUri!=null)
             {
                 //사진 있음. Storage 업로드
                 UUID imageUUID = UUID.randomUUID();

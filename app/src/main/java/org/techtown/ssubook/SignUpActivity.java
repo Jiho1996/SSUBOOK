@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +24,9 @@ import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -94,12 +97,14 @@ public class SignUpActivity extends AppCompatActivity {
                             FirebaseUser currentUser = firebaseAuth.getCurrentUser();
                             FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
                             Map<String, Object> userData = new HashMap<>();
-                            userData.put("interested_post",new String[1]);
-                            if(currentUser.getDisplayName().length()>0)
-                                userData.put("nickname",currentUser.getDisplayName());
+                            ArrayList<String> interested_init = new ArrayList<String>();
+                            interested_init.add("");
+                            userData.put("interested_post",interested_init);
+                            if(!TextUtils.isEmpty(editTextName.getText().toString()))
+                                userData.put("nickname",editTextName.getText().toString());
                             else
                                 userData.put("nickname","");
-                            if(!currentUser.getPhotoUrl().equals(Uri.EMPTY))
+                            if(currentUser.getPhotoUrl()!=null)
                                 userData.put("photo",currentUser.getPhotoUrl().toString());
                             else
                                 userData.put("photo","");
