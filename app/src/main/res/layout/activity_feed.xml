@@ -9,6 +9,7 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
         android:id="@+id/swipe_layout">
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -17,9 +18,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_feed"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-
-                />
+                android:layout_height="match_parent" />
         </androidx.core.widget.NestedScrollView>
 
 
@@ -37,18 +36,49 @@
         app:backgroundTint="#FFFFFF"
         app:borderWidth="0dp"/>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_nav_home"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:background="#ffffff"
-        app:itemIconSize="40dp"
-        app:itemIconTint="@drawable/item_color"
-        app:labelVisibilityMode="unlabeled"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_home" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="60dp"
+            android:background="@color/tab_color2" />
+
+        <LinearLayout
+            android:id="@+id/bottom_nav_home"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+
+            <ImageButton
+                android:id="@+id/btn_feed"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:src="@drawable/ic_home_black_24dp"
+                android:text="Button" />
+
+            <ImageButton
+                android:id="@+id/btn_search"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:src="@drawable/ic_list_black_24dp"
+                android:text="Button" />
+
+            <ImageButton
+                android:id="@+id/btn_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:src="@drawable/ic_person_black_24dp"
+                android:text="Button" />
+        </LinearLayout>
 
 
 </RelativeLayout>

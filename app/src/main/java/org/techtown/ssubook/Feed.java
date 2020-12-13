@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -39,6 +40,8 @@ public class Feed extends AppCompatActivity
     private ActionBar feedActionbar;
     private SwipeRefreshLayout swipeLayout;
     private FloatingActionButton floatingBtn;
+    private ImageButton profileButton;
+    private ImageButton searchButton;
     ArrayList<BookItem> bookItemBundle = new ArrayList<>();
 
     @Override
@@ -50,6 +53,9 @@ public class Feed extends AppCompatActivity
         swipeLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_layout);
         feedRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_feed);
         floatingBtn = (FloatingActionButton) findViewById(R.id.floating_feed_btn);
+        profileButton = (ImageButton) findViewById(R.id.btn_profile);
+        searchButton = (ImageButton) findViewById(R.id.btn_search);
+
         feedActionbar = getSupportActionBar();
         feedActionbar.setDisplayHomeAsUpEnabled(false);   //상단바에 뒤로가기버튼
         floatingBtn.show();
@@ -206,6 +212,24 @@ public class Feed extends AppCompatActivity
             public void onClick(View view)
             {
                 Intent intent = new Intent(Feed.this, WritePost.class);
+                startActivity(intent);
+            }
+        });
+        profileButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(Feed.this, Mypage.class);
+                startActivity(intent);
+            }
+        });
+        searchButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(Feed.this, search.class);
                 startActivity(intent);
             }
         });
