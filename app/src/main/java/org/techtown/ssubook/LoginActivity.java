@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
-                            Intent intent = new Intent(LoginActivity.this, Message.class);
+                            Intent intent = new Intent(LoginActivity.this, Feed.class);
                             startActivity(intent);
                             Toast.makeText(LoginActivity.this, "로그인 성공.", Toast.LENGTH_LONG).show();
 
