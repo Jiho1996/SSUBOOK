@@ -6,11 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Feed">
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/swipe_layout">
-        <androidx.core.widget.NestedScrollView
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -19,10 +16,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 />
-        </androidx.core.widget.NestedScrollView>
+        </ScrollView>
 
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_feed_btn"
