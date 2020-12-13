@@ -38,6 +38,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -96,7 +97,7 @@ public class ChattingRoom extends AppCompatActivity
                                     timeStamp = Long.parseLong(dataMap.get("timeStamp").toString());
                                     contents = dataMap.get("contents").toString();
 
-                                    Log.w("Message", "ChatRoom Modified");
+                                    Log.w("Message", "Chat Modified");
                                     break;
                                 case REMOVED:
                                     break;
@@ -108,7 +109,7 @@ public class ChattingRoom extends AppCompatActivity
                                     timeStamp = Long.parseLong(dataMap.get("timeStamp").toString());
                                     contents = dataMap.get("contents").toString();
                                     chatUID = doc.getDocument().getId();
-                                    chatItemBundle.add(new ChatItem(sender, reciever, timeStamp, contents, chatUID));
+                                    chatItemBundle.add(new ChatItem(sender, reciever, timeStamp, contents, chatUID,currentUser.getUid()));
                                     Log.w("Message", "Chat Load");
                             }
                         }
@@ -156,7 +157,7 @@ public class ChattingRoom extends AppCompatActivity
                                     timeStamp = Long.parseLong(dataMap.get("timeStamp").toString());
                                     contents = dataMap.get("contents").toString();
                                     chatUID = doc.getDocument().getId();
-                                    chatItemBundle.add(new ChatItem(sender, reciever, timeStamp, contents, chatUID));
+                                    chatItemBundle.add(new ChatItem(sender, reciever, timeStamp, contents, chatUID,currentUser.getUid()));
                                     Log.w("Message", "Chat Load");
                             }
                         }
@@ -172,6 +173,7 @@ public class ChattingRoom extends AppCompatActivity
 
         msgActionbar = getSupportActionBar();
         msgActionbar.setDisplayHomeAsUpEnabled(true);   //상단바에 뒤로가기버튼
+
         //상대방 닉네임 가져오기
         firebaseDB.collection("User").document(intent_receiver).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
         {
@@ -199,8 +201,6 @@ public class ChattingRoom extends AppCompatActivity
         });
 
 
-
-        //msgActionbar.setTitle("쪽지");    //상단바 타이틀 변경
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_chatroom);
         recyclerView.setHasFixedSize(true);
@@ -233,6 +233,7 @@ public class ChattingRoom extends AppCompatActivity
                 chatData.put("sender",sender);
                 chatData.put("reciever",reciever);
                 chatData.put("contents",contents);
+                chatData.put("timeStamp",new Date().getTime());
                 firebaseDB.collection("Chat").add(chatData).addOnSuccessListener(new OnSuccessListener<DocumentReference>()
                 {
                     @Override
@@ -255,36 +256,7 @@ public class ChattingRoom extends AppCompatActivity
             }
         });
 
-        firebaseDB.collection("Chat").whereEqualTo("sender",userUID).whereEqualTo("reciever",intent_receiver).addSnapshotListener(new EventListener<QuerySnapshot>()
-        {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error)
-            {
-                if(error != null)
-                {
-                    Log.w("ChattingRoom", "Listen Failed",error);
-                }
-                else
-                {
-                    for (DocumentChange doc: value.getDocumentChanges())
-                    {
-                        if(doc.getType()==DocumentChange.Type.ADDED)
-                        {
-                            Map<String,Object> addedDate = doc.getDocument().getData();
-                            String sender = addedDate.get("sender").toString();
-                            String reciever = addedDate.get("reciever").toString();
-                            long timeStamp = Long.parseLong(addedDate.get("timeStamp").toString());
-                            String contents = addedDate.get("contents").toString();
-                            String chatUID = doc.getDocument().getId();
-                            ChatItem chatItem = new ChatItem(sender,reciever,timeStamp,contents,chatUID);
-                            chatItemBundle.add(chatItem);
 
-                        }
-                    }
-                    adapter.notifyDataSetChanged();
-                }
-            }
-        });
 
     }
 }
