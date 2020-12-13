@@ -20,6 +20,13 @@ public class ChatRoomItem implements Comparable<ChatRoomItem>
     private ArrayList<String> UserList = new ArrayList<>(); //유저 목록
     private ArrayList<ChatItem> ChatList = new ArrayList<>(); //채팅 목록
     private String LastChat;
+    private ChatItem Last_Chat;
+
+    public ChatRoomItem(ArrayList<String> UserList, String LastChat)
+    {
+        this.UserList = UserList;
+        this.LastChat = LastChat;
+    }
 
 
     public ChatRoomItem(ArrayList<String> UserList, ArrayList<ChatItem> ChatList)
@@ -28,12 +35,12 @@ public class ChatRoomItem implements Comparable<ChatRoomItem>
         this.ChatList = ChatList;
     }
 
-    public ChatRoomItem(ArrayList<String> UserList, ArrayList<String> ChatList,boolean isChatUID)
+    public ChatRoomItem(ArrayList<String> UserList, ArrayList<String> ChatList,boolean LastChat)
     {
         this.UserList = UserList;
-        for(int i=0;i<ChatList.size();i++)
+        for(String chat : ChatList)
         {
-            this.ChatList.add(new ChatItem( ChatList.get(i)));
+            this.ChatList.add(new ChatItem(chat));
         }
     }
 
@@ -72,7 +79,6 @@ public class ChatRoomItem implements Comparable<ChatRoomItem>
         Collections.sort(ChatList);
         return ChatList.get(0);
     }
-
 
     @Override
     public int compareTo(ChatRoomItem chatRoomItem)

@@ -57,36 +57,55 @@ public class Message extends AppCompatActivity
         {
             final String userUID = currentUser.getUid();
             //채팅방 쿼리 작업
-            final CollectionReference chatRef = firebaseDB.collection("Chat");
+            final CollectionReference chatRef = firebaseDB.collection("ChatRoom");
 
-            Query chatRoomQuery = chatRef.whereArrayContains("UserList",userUID);
-            chatRoomQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+            final Query chatRoomQuery = chatRef.whereArrayContains("UserList",userUID);
+            chatRoomQuery.addSnapshotListener(new EventListener<QuerySnapshot>()
             {
                 @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task)
+                public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error)
                 {
-                    if (task.isSuccessful())
+                    if(error != null)
                     {
-                        for (QueryDocumentSnapshot document : task.getResult()) //Task 종료 시 getResult는 QuerySnapShot을 return, QuerySnapShot은 Iterable이므로 for-each 문으로 QueryDocumentSnapshot으로 사용가능.
-                        {
-                            //각각의 document는 서로 다른 ChatRoom임
-
-                            //QueryDocumentSnapshot은 모두 document형, getData()로 Map<String,Object>를 return
-                            Map<String,Object> dataMap = document.getData();    //dataMap.get("ChatList")하면 ["UID","UID",..]된 ArrayList들이 나옴
-                            ArrayList<String> ChatList = (ArrayList) dataMap.get("ChatList");
-                            ArrayList<String> UserList = (ArrayList) dataMap.get("UserList");
-                            String lastChat = dataMap.get("LastChat").toString();
-                            chatRoomItemBundle.add(new ChatRoomItem(UserList,ChatList,true));
-                            Log.w("Message","ChatRoom Load");
-                        }
-
-                        Collections.sort(chatRoomItemBundle);   //TimeStamp를 사용해 최신순 정렬
-                        chatRoomAdapter.notifyDataSetChanged();
+                        Log.w("ChatRoom", "Listen Failed",error);
                     }
                     else
                     {
-                        //작업 실패 시
-                        Log.w("Message","Firestore Load Failed");
+                        ArrayList<String> ChatList;
+                        ArrayList<String> UserList;
+                        String lastChat;
+                        Map<String, Object> dataMap;
+                        for (DocumentChange doc: value.getDocumentChanges())
+                        {
+                            switch (doc.getType())
+                            {
+                                case MODIFIED:
+                                    dataMap = doc.getDocument().getData();    //dataMap.get("ChatList")하면 ["UID","UID",..]된 ArrayList들이 나옴
+                                    ChatList = (ArrayList) dataMap.get("ChatList");
+                                    UserList = (ArrayList) dataMap.get("UserList");
+                                    lastChat = dataMap.get("LastChat").toString();
+                                    for (ChatRoomItem chat : chatRoomItemBundle)
+                                    {
+                                        if(chat.getUserList().equals(UserList))
+                                        {
+                                            chat.setLastChat(lastChat);
+                                        }
+                                    }
+                                    Log.w("Message", "ChatRoom Modified");
+                                    break;
+                                case REMOVED:
+                                    break;
+                                case ADDED:
+                                default:
+                                    dataMap = doc.getDocument().getData();    //dataMap.get("ChatList")하면 ["UID","UID",..]된 ArrayList들이 나옴
+                                    ChatList = (ArrayList) dataMap.get("ChatList");
+                                    UserList = (ArrayList) dataMap.get("UserList");
+                                    lastChat = dataMap.get("LastChat").toString();
+                                    chatRoomItemBundle.add(new ChatRoomItem(UserList, lastChat));
+                                    Log.w("Message", "ChatRoom Load");
+                            }
+                        }
+                        chatRoomAdapter.notifyDataSetChanged();
                     }
                 }
             });
@@ -101,5 +120,49 @@ public class Message extends AppCompatActivity
         chatRoomRecyclerView.setAdapter(chatRoomAdapter);
 
 
+    }
+
+    private void refresh()
+    {
+        FirebaseFirestore firebaseDB = FirebaseFirestore.getInstance();
+        String userUID;
+        CollectionReference chatRef = firebaseDB.collection("Chat");
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(currentUser != null)
+        {
+            userUID = currentUser.getUid();
+            final Query chatRoomQuery = chatRef.whereArrayContains("UserList",userUID);
+            chatRoomQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+            {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task)
+                {
+                    if (task.isSuccessful())
+                    {
+                        chatRoomItemBundle.clear();
+                        for (QueryDocumentSnapshot document : task.getResult()) //Task 종료 시 getResult는 QuerySnapShot을 return, QuerySnapShot은 Iterable이므로 for-each 문으로 QueryDocumentSnapshot으로 사용가능.
+                        {
+                            //각각의 document는 서로 다른 ChatRoom임
+
+                            //QueryDocumentSnapshot은 모두 document형, getData()로 Map<String,Object>를 return
+                            Map<String, Object> dataMap = document.getData();    //dataMap.get("ChatList")하면 ["UID","UID",..]된 ArrayList들이 나옴
+                            ArrayList<String> ChatList = (ArrayList) dataMap.get("ChatList");
+                            ArrayList<String> UserList = (ArrayList) dataMap.get("UserList");
+                            String lastChat = dataMap.get("LastChat").toString();
+                            chatRoomItemBundle.add(new ChatRoomItem(UserList, lastChat));
+                            Log.w("Message", "ChatRoom Load");
+                        }
+
+                        chatRoomAdapter.notifyDataSetChanged();
+                    }
+                    else
+                    {
+                        //작업 실패 시
+                        Log.w("Message", "Firestore Load Failed");
+                    }
+                }
+            });
+        }
     }
 }
