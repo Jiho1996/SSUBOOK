@@ -13,20 +13,27 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
 public class search extends AppCompatActivity {
     ArrayAdapter<String> arrayAdapter;
+    private ImageButton feedButton;
+    private ImageButton profileButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         setTitle("검색");
+        feedButton = (ImageButton) findViewById(R.id.btn_feed);
+        profileButton = (ImageButton) findViewById(R.id.btn_profile);
 /*
         ActionBar ab = getSupportActionBar();
        ab.setTitle("검색");
@@ -43,6 +50,24 @@ public class search extends AppCompatActivity {
         //검색어들 예시를 보여준다.
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mylist);
         listView.setAdapter(arrayAdapter);
+        feedButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(search.this, Feed.class);
+                startActivity(intent);
+            }
+        });
+        profileButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(search.this, Mypage.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

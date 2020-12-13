@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,6 +35,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText editTextName;
     private EditText editTextPasswordConfirm;
     private Button buttonJoin;
+    private ActionBar actionBar;
     private static final String TAG = "SignUpActivity";
 
     @Override
@@ -47,6 +49,8 @@ public class SignUpActivity extends AppCompatActivity {
         editTextPassword = (EditText) findViewById(R.id.password);
         editTextName = (EditText) findViewById(R.id.nick_name);
         editTextPasswordConfirm = (EditText) findViewById(R.id.password2);
+        actionBar = getSupportActionBar();
+        actionBar.hide();
 
 
         buttonJoin = (Button) findViewById(R.id.button2);
