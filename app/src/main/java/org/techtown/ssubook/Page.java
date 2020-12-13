@@ -37,6 +37,7 @@ public class Page extends AppCompatActivity {
     TextView low5cos1;
     TextView low5cos2;
     TextView content_text;
+    TextView price_text;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +46,7 @@ public class Page extends AppCompatActivity {
         title_text= (TextView)findViewById(R.id.titletext);
         author_text= (TextView)findViewById(R.id.authortext);
         content_text = (TextView)findViewById(R.id.contents);
+        price_text=(TextView)findViewById(R.id.price);
 
         low1cos1= (TextView)findViewById(R.id.row1col1);
         low1cos2= (TextView)findViewById(R.id.row1col2);
@@ -141,6 +143,7 @@ public class Page extends AppCompatActivity {
 
                         content_text.setText(contents);
 
+                        price_text.setText(Integer.toString(price)+"원");
                     }
                     else
                     {
