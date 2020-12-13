@@ -157,6 +157,21 @@ public class Post extends AppCompatActivity
         feedRecyclerView.setAdapter(feedAdapter);
 
 
+        feedRecyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText( getApplicationContext(), "Log Out 성공", Toast.LENGTH_LONG ).show();
+            }
+        });
+        /*
+        feedAdapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText( getApplicationContext(), "Log Out 성공", Toast.LENGTH_LONG ).show();
+            }
+        });
+*/
+
 
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
         {
@@ -184,7 +199,6 @@ public class Post extends AppCompatActivity
                                 long timeStamp = Long.parseLong(dataMap.get("timeStamp").toString());
 
 
-                                //책 상태
                                 String underbarTrace = dataMap.get("underbarTrace").toString();   //NONE, PENCIL, PEN
                                 String writeTrace = dataMap.get("writeTrace").toString();  //NONE, PENCIL, PEN
                                 String bookCover = dataMap.get("bookCover").toString(); //CLEAN, DIRTY

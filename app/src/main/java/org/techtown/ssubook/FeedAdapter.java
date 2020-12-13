@@ -1,6 +1,9 @@
 package org.techtown.ssubook;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +51,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         //이미지뷰는 Firebase+Glide
         Glide.with(holder.mainImageView.getContext()).load(curItm.getImageURL()).into(holder.mainImageView);
         //holder.mainImageView.
+        //여기부터 시험
+
     }
 
     @Override
@@ -71,6 +76,20 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
             priceView = v.findViewById(R.id.recyclerViewFeed_Price);
             mainImageView = v.findViewById(R.id.recyclerViewFeed_Image);
             //Todo : 클릭 이벤트 처리하기
+
+            v.setOnClickListener(new View.OnClickListener(){
+                @Override
+            public void onClick(View view) {
+                    Context context2 = view.getContext();
+                    int pos=getAdapterPosition();
+                    Log.i("in_FeedAdapter", Integer.toString(pos));
+                    Log.i("in_FeedAdapter", feedItemBundle.get(pos).getTitle()); //제목.
+                    Intent intent = new Intent(context2,Page.class);
+                    intent.putExtra("UID",feedItemBundle.get(pos).getUID());
+                    context2.startActivity(intent);
+                 }
+            });
+
             /*
             v.setOnClickListener(new View.OnClickListener()
             {
@@ -78,9 +97,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
                 public void onClick(View view)
                 {
 
+                    Log.d("Recyclerview", "test");
                 }
             });
-            */
+
+             */
+
 
         }
     }
