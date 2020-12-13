@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <ImageView
+        android:id="@+id/page_image"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:padding="5dp"
-        android:background="#555555"
-        android:textSize="20dp" />
+        android:background="#555555" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,6 +19,7 @@
         android:layout_margin="10dp">
 
         <ImageView
+            android:id="@+id/page_profile_image"
             android:layout_width="57dp"
             android:layout_height="57dp"
             android:layout_gravity="left"
@@ -244,7 +245,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_gravity="bottom">
         <ImageView
             android:layout_width="57dp"
             android:layout_height="57dp"
@@ -267,6 +269,7 @@
             android:text="10000원" />
 
         <Button
+            android:id="@+id/page_start_btn"
             android:layout_width="wrap_content"
             android:layout_height="57dp"
             android:text="쪽지로 거래 시작" />

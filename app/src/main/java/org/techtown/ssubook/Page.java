@@ -7,8 +7,12 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
@@ -38,6 +42,9 @@ public class Page extends AppCompatActivity {
     TextView low5cos2;
     TextView content_text;
     TextView price_text;
+    ImageView cameraImage,profileImage;
+    Button startBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,11 +68,15 @@ public class Page extends AppCompatActivity {
         low5cos1= (TextView)findViewById(R.id.row5col1);
         low5cos2= (TextView)findViewById(R.id.row5col2);
 
+        cameraImage= (ImageView)findViewById(R.id.page_image);
+        profileImage=(ImageView)findViewById(R.id.page_profile_image);
+        startBtn=(Button) findViewById(R.id.page_start_btn);
+
         Intent intent = getIntent();
         String UID = intent.getStringExtra("UID");
 
         final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        FirebaseFirestore firebaseDB = FirebaseFirestore.getInstance();
+        final FirebaseFirestore firebaseDB = FirebaseFirestore.getInstance();
         firebaseDB.collection("Post").document(UID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
         {
             @Override
@@ -77,7 +88,7 @@ public class Page extends AppCompatActivity {
                     if(document.exists())
                     {
                          String title;   //제목
-                         String author;  //use firebase UID, 저자
+                         final String author;  //use firebase UID, 저자
                          String UID; //게시글 UID
                          int price;  //가격
                          long timeStamp;  //올린시간
@@ -144,6 +155,38 @@ public class Page extends AppCompatActivity {
                         content_text.setText(contents);
 
                         price_text.setText(Integer.toString(price)+"원");
+
+                        startBtn.setOnClickListener(new View.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(View view)
+                            {
+                                Intent intent = new Intent(Page.this,ChattingRoom.class);
+                                intent.putExtra("reciever",author);
+                                startActivity(intent);
+                            }
+                        });
+                        Glide.with(getApplicationContext()).load(imageURL).into(cameraImage);
+                        firebaseDB.collection("User").document(author).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+                        {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task)
+                            {
+                                if(task.isSuccessful())
+                                {
+                                    DocumentSnapshot snapshot = task.getResult();
+                                    if(snapshot.exists())
+                                    {
+                                        String profilePhoto = snapshot.getData().get("photo").toString();
+                                        if((!profilePhoto.equals(""))&&(profilePhoto.length()>0)&&(profilePhoto!=null))
+                                            Glide.with(getApplicationContext()).load(profilePhoto).into(profileImage);
+
+                                    }
+                                }
+                            }
+                        });
+
+
                     }
                     else
                     {

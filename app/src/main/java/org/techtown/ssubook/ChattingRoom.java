@@ -110,13 +110,14 @@ public class ChattingRoom extends AppCompatActivity
                                     contents = dataMap.get("contents").toString();
                                     chatUID = doc.getDocument().getId();
                                     chatItemBundle.add(new ChatItem(sender, reciever, timeStamp, contents, chatUID,currentUser.getUid()));
-                                    Log.w("Message", "Chat Load");
+                                    Log.w("Message", "Chat Load_A / Chat Count:"+chatItemBundle.size());
                             }
                         }
                         adapter.notifyDataSetChanged();
                     }
                 }
             });
+           /*
             chatRef.whereEqualTo("sender",intent_receiver).whereEqualTo("reciever",userUID).addSnapshotListener(new EventListener<QuerySnapshot>()
             {
                 @Override
@@ -158,13 +159,15 @@ public class ChattingRoom extends AppCompatActivity
                                     contents = dataMap.get("contents").toString();
                                     chatUID = doc.getDocument().getId();
                                     chatItemBundle.add(new ChatItem(sender, reciever, timeStamp, contents, chatUID,currentUser.getUid()));
-                                    Log.w("Message", "Chat Load");
+                                    Log.w("Message", "Chat Load_B / Chat Count: "+chatItemBundle.size());
                             }
                         }
                         adapter.notifyDataSetChanged();
                     }
                 }
             });
+            */
+
         }
 
 
