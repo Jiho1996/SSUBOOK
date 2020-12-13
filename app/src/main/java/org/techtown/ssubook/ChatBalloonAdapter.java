@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 public class ChatBalloonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
@@ -65,6 +67,30 @@ public class ChatBalloonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position)
     {
         ChatItem curItm = ChatItemBundle.get(position);
+        if(holder instanceof SendTextViewHolder)
+        {
+            ((SendTextViewHolder) holder).dateView.setText(curItm.getTimeString());
+            ((SendTextViewHolder) holder).chatView.setText(curItm.getContents());
+        }
+        else if(holder instanceof SendImageViewHolder)
+        {
+            ((SendImageViewHolder) holder).dateView.setText(curItm.getTimeString());
+            Glide.with(holder.itemView.getContext()).load(curItm.getContents()).into(((SendImageViewHolder) holder).chatImageView);
+        }
+        else if(holder instanceof RecieveTextViewHolder)
+        {
+            ((RecieveTextViewHolder) holder).dateView.setText(curItm.getTimeString());
+            ((RecieveTextViewHolder) holder).chatView.setText(curItm.getContents());
+        }
+        else if(holder instanceof RecieveImageViewHolder)
+        {
+            ((RecieveImageViewHolder) holder).dateView.setText(curItm.getTimeString());
+            Glide.with(holder.itemView.getContext()).load(curItm.getContents()).into(((RecieveImageViewHolder) holder).chatImageView);
+        }
+        else if(holder instanceof DateViewHolder)
+        {
+            ((DateViewHolder) holder).dateView.setText(curItm.getTimeStringDay());
+        }
     }
 
     @Override
@@ -102,13 +128,13 @@ public class ChatBalloonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public class RecieveTextViewHolder extends RecyclerView.ViewHolder
     {
         TextView dateView;
-        TextView chatImageView;
+        TextView chatView;
 
         public RecieveTextViewHolder(@NonNull View v)
         {
             super(v);
             dateView = v.findViewById(R.id.recieve_message_timetext);
-            chatImageView = v.findViewById(R.id.recieve_message_text);
+            chatView = v.findViewById(R.id.recieve_message_text);
         }
     }
 
@@ -134,5 +160,11 @@ public class ChatBalloonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             super(v);
             dateView = v.findViewById(R.id.middle_message_text);
         }
+    }
+
+    @Override
+    public int getItemViewType(int position)
+    {
+        return ChatItemBundle.get(position).getViewType();
     }
 }

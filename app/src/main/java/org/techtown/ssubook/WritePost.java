@@ -136,7 +136,7 @@ public class WritePost extends AppCompatActivity
                                 int price = Integer.parseInt(editText_price.getText().toString());
 
                                 String image_URL = uri.toString();
-
+                                final String contents = editText_contents.getText().toString();
                                 //책 상태
                                 String underbarTrace = "NONE";
                                 if (rB_underline_none.isChecked())
@@ -196,7 +196,7 @@ public class WritePost extends AppCompatActivity
                                     discolor = false;
                                 }
                                 Map<String, Object> postData = new HashMap<>();
-                                postData.put("UID", (Integer.toString((int) Math.random() * 1000000000)));
+                                postData.put("contents",contents);
                                 postData.put("title", title);
                                 postData.put("author", author);
                                 postData.put("price", price);
@@ -214,9 +214,18 @@ public class WritePost extends AppCompatActivity
                                     public void onSuccess(DocumentReference documentReference)
                                     {
                                         Log.w("WritePost", "Success_with_image");
-                                        Toast.makeText(WritePost.this, "게시글이 정상적으로 작성되었습니다.", Toast.LENGTH_LONG).show();
-                                        Intent intent = new Intent(WritePost.this, Feed.class);
-                                        startActivity(intent);
+                                        firebaseDB.collection("Post").document(documentReference.getId()).update("UID",documentReference.getId()).addOnSuccessListener(new OnSuccessListener<Void>()
+                                        {
+                                            @Override
+                                            public void onSuccess(Void aVoid)
+                                            {
+                                                Toast.makeText(WritePost.this, "게시글이 정상적으로 작성되었습니다.", Toast.LENGTH_LONG).show();
+                                                Intent intent = new Intent(WritePost.this, Feed.class);
+                                                startActivity(intent);
+
+                                            }
+                                        });
+
                                     }
                                 }).addOnFailureListener(new OnFailureListener()
                                 {

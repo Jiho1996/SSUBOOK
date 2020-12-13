@@ -1,5 +1,7 @@
 package org.techtown.ssubook;
 
+import android.view.View;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,17 +22,29 @@ public class ChatItem implements Comparable<ChatItem>
     private long timeStamp; //시간
     private String contents;    //콘텐츠
     private String chatUID;
+    private String currentUID;
+    private Date date;
+    private int ViewType;
+
 
     private String opponent_Nickname;
     private String opponent_photo;
 
-    public ChatItem(String sender, String receiver, long timeStamp, String contents,String chatUID)
+    public ChatItem(Date date)
+    {
+        this.date=date;
+        ViewType=1004;
+    }
+
+    public ChatItem(String sender, String receiver, long timeStamp, String contents,String chatUID,String currentUID)
     {
         this.sender=sender;
         this.receiver=receiver;
         this.timeStamp=timeStamp;
         this.contents=contents;
         this.chatUID=chatUID;
+        this.currentUID=currentUID;
+        ViewType=this.getViewType();
         findOpponentprofile();
     }
 
@@ -137,6 +151,13 @@ public class ChatItem implements Comparable<ChatItem>
             return "상대방";
     }
 
+    public String getTimeStringDay()
+    {
+        Date date = new Date(timeStamp);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+        return dateFormat.format(date);
+    }
+
     public long getTimeStamp()
     {
         return timeStamp;
@@ -207,5 +228,35 @@ public class ChatItem implements Comparable<ChatItem>
             return 1;
         else
             return 0;
+    }
+
+    public int getViewType()
+    {
+        if(date!=null)
+            return 1004;
+        else if(currentUID.equals(sender))
+        {
+            //SEND_TEXT : 1000, SEND_IMAGE : 1002
+            if(isPicture(contents))
+            {
+                return 1002;
+            }
+            else
+            {
+                return 1000;
+            }
+        }
+        else
+        {
+            //SEND_TEXT : 1000, SEND_IMAGE : 1002
+            if(isPicture(contents))
+            {
+                return 1003;
+            }
+            else
+            {
+                return 1001;
+            }
+        }
     }
 }
