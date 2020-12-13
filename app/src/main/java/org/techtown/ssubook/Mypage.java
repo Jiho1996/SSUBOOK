@@ -1,24 +1,51 @@
 package org.techtown.ssubook;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
 
 public class Mypage extends AppCompatActivity {
+    private RecyclerView feedRecyclerView;
+    private RecyclerView.Adapter feedAdapter;
+    private RecyclerView.LayoutManager feedManager;
+    private ActionBar feedActionbar;
+    private SwipeRefreshLayout swipeLayout;
+    private FloatingActionButton floatingBtn;
+    ArrayList<BookItem> bookItemBundle = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypage);
         setTitle("마이페이지");
+
+
+
+        TextView textView=(TextView)findViewById(R.id.name_text);
+        textView.setText("김택민");
+        //Log.d("abc", currentUser.getEmail());
+        //textView.setText(currentUser.getUid());
 
     }
 
