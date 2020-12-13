@@ -61,7 +61,6 @@ public class ChattingRoom extends AppCompatActivity
         Intent chatDataIntent = getIntent();
         final String intent_receiver = chatDataIntent.getStringExtra("reciever");
         //Firestore 데이터 읽어오기
-
         //Uid 가져오기
         final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if(currentUser != null)
@@ -69,36 +68,105 @@ public class ChattingRoom extends AppCompatActivity
             userUID = currentUser.getUid();
             //채팅방 쿼리 작업
             CollectionReference chatRef = firebaseDB.collection("Chat");
-            Query chatQuery = chatRef.whereEqualTo("sender",userUID).whereEqualTo("reciever",intent_receiver);
-            chatQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+           chatRef.whereEqualTo("sender",userUID).whereEqualTo("reciever",intent_receiver).addSnapshotListener(new EventListener<QuerySnapshot>()
             {
                 @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task)
+                public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error)
                 {
-                    if (task.isSuccessful())
+                    if (error != null)
                     {
-                        for (QueryDocumentSnapshot document : task.getResult()) //Task 종료 시 getResult는 QuerySnapShot을 return, QuerySnapShot은 Iterable이므로 for-each 문으로 QueryDocumentSnapshot으로 사용가능.
-                        {
-                            //각각의 document는 서로 다른 Chat임
-
-                            //QueryDocumentSnapshot은 모두 document형, getData()로 Map<String,Object>를 return
-                            Map<String,Object> dataMap = document.getData();
-                            String sender = dataMap.get("sender").toString();
-                            String reciever = dataMap.get("reciever").toString();
-                            long timeStamp = Long.parseLong(dataMap.get("timeStamp").toString());
-                            String contents = dataMap.get("contents").toString();
-                            String chatUID = document.getId();
-                            ChatItem chatItem = new ChatItem(sender,reciever,timeStamp,contents,chatUID);
-                            chatItemBundle.add(chatItem);
-                        }
+                        Log.w("ChattingRoom", "Listen Failed", error);
                     }
                     else
                     {
-                        //작업 실패 시
+                        String sender;
+                        String reciever;
+                        long timeStamp;
+                        String contents;
+                        String chatUID;
+                        Map<String, Object> dataMap;
+                        for (DocumentChange doc : value.getDocumentChanges())
+                        {
+                            switch (doc.getType())
+                            {
+                                case MODIFIED:
+                                    dataMap = doc.getDocument().getData();    //dataMap.get("ChatList")하면 ["UID","UID",..]된 ArrayList들이 나옴
+                                    sender = dataMap.get("sender").toString();
+                                    reciever = dataMap.get("reciever").toString();
+                                    timeStamp = Long.parseLong(dataMap.get("timeStamp").toString());
+                                    contents = dataMap.get("contents").toString();
+
+                                    Log.w("Message", "ChatRoom Modified");
+                                    break;
+                                case REMOVED:
+                                    break;
+                                case ADDED:
+                                default:
+                                    dataMap = doc.getDocument().getData();    //dataMap.get("ChatList")하면 ["UID","UID",..]된 ArrayList들이 나옴
+                                    sender = dataMap.get("sender").toString();
+                                    reciever = dataMap.get("reciever").toString();
+                                    timeStamp = Long.parseLong(dataMap.get("timeStamp").toString());
+                                    contents = dataMap.get("contents").toString();
+                                    chatUID = doc.getDocument().getId();
+                                    chatItemBundle.add(new ChatItem(sender, reciever, timeStamp, contents, chatUID));
+                                    Log.w("Message", "Chat Load");
+                            }
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            });
+            chatRef.whereEqualTo("sender",intent_receiver).whereEqualTo("reciever",userUID).addSnapshotListener(new EventListener<QuerySnapshot>()
+            {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error)
+                {
+                    if (error != null)
+                    {
+                        Log.w("ChattingRoom", "Listen Failed", error);
+                    }
+                    else
+                    {
+                        String sender;
+                        String reciever;
+                        long timeStamp;
+                        String contents;
+                        String chatUID;
+                        Map<String, Object> dataMap;
+                        for (DocumentChange doc : value.getDocumentChanges())
+                        {
+                            switch (doc.getType())
+                            {
+                                case MODIFIED:
+                                    dataMap = doc.getDocument().getData();    //dataMap.get("ChatList")하면 ["UID","UID",..]된 ArrayList들이 나옴
+                                    sender = dataMap.get("sender").toString();
+                                    reciever = dataMap.get("reciever").toString();
+                                    timeStamp = Long.parseLong(dataMap.get("timeStamp").toString());
+                                    contents = dataMap.get("contents").toString();
+
+                                    Log.w("Message", "ChatRoom Modified");
+                                    break;
+                                case REMOVED:
+                                    break;
+                                case ADDED:
+                                default:
+                                    dataMap = doc.getDocument().getData();    //dataMap.get("ChatList")하면 ["UID","UID",..]된 ArrayList들이 나옴
+                                    sender = dataMap.get("sender").toString();
+                                    reciever = dataMap.get("reciever").toString();
+                                    timeStamp = Long.parseLong(dataMap.get("timeStamp").toString());
+                                    contents = dataMap.get("contents").toString();
+                                    chatUID = doc.getDocument().getId();
+                                    chatItemBundle.add(new ChatItem(sender, reciever, timeStamp, contents, chatUID));
+                                    Log.w("Message", "Chat Load");
+                            }
+                        }
+                        adapter.notifyDataSetChanged();
                     }
                 }
             });
         }
+
+
 
 
 

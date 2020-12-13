@@ -1,6 +1,7 @@
 package org.techtown.ssubook;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
     @Override
     public ChatRoomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
-        Context mContext = parent.getContext();
+        mContext = parent.getContext();
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.recycler_chat_room,parent,false);
         ChatRoomViewHolder holder = new ChatRoomViewHolder(view);
@@ -63,7 +64,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
                 if(document.exists())
                 {
                     String sender=document.getData().get("sender").toString();
-                    String receiver=document.getData().get("reciever").toString();
+                    final String receiver=document.getData().get("reciever").toString();
                     long timeStamp=Long.parseLong(document.getData().get("timeStamp").toString());
                     String contents = document.getData().get("contents").toString();
                     if(isPicture(contents))
@@ -74,7 +75,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
                     {
                         holder.maintextView.setText(contents);
                     }
-                    String opponent;
+                    final String opponent;
 
                     Date date = new Date(timeStamp);
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm", Locale.getDefault());
@@ -116,6 +117,8 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
                 }
             }
         });
+
+
 
     }
     private boolean isValid(String url)
@@ -159,10 +162,28 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
         public ChatRoomViewHolder(@NonNull View v)
         {
             super(v);
+            v.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    int pos = getAdapterPosition();
+                    if(pos!=RecyclerView.NO_POSITION)
+                    {
+                        ChatRoomItem chatroomItem = chatRoomItemBundle.get(pos);
+                        String reciever = chatroomItem.getAnother();
+                        Intent intent = new Intent(view.getContext(),ChattingRoom.class);
+                        intent.putExtra("reciever",reciever);
+                        mContext.startActivity(intent);
+                    }
+                }
+            });
             titleView = v.findViewById(R.id.recycler_chatRoom_title);
             dateView = v.findViewById(R.id.recycler_chatRoom_Date);
             maintextView = v.findViewById(R.id.recycler_chatRoom_mainText);
             opponentImageView = v.findViewById(R.id.recycler_chatRoom_image);
+
+
         }
     }
 }
