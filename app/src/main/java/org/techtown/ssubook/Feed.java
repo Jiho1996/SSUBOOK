@@ -174,21 +174,18 @@ public class Feed extends AppCompatActivity
                             bookItemBundle.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) //Task 종료 시 getResult는 QuerySnapShot을 return, QuerySnapShot은 Iterable이므로 for-each 문으로 QueryDocumentSnapshot으로 사용가능.
                             {
-                                //QueryDocumentSnapshot은 모두 document형, getData()로 Map<String,Object>를 return
                                 Map<String,Object> dataMap = document.getData();
-                                String title = dataMap.get("title").toString();   //제목
-                                String author = dataMap.get("author").toString();  //use firebase UID, 저자
-                                String UID = dataMap.get("UID").toString(); //게시글 UID
-                                int price = Integer.parseInt(dataMap.get("price").toString());  //가격
+                                String title = dataMap.get("title").toString();
+                                String author = dataMap.get("author").toString();
+                                String UID = document.getId();
+                                int price = Integer.parseInt(dataMap.get("price").toString());
                                 long timeStamp = Long.parseLong(dataMap.get("timeStamp").toString());
 
-
-                                //책 상태
-                                String underbarTrace = dataMap.get("underbarTrace").toString();   //NONE, PENCIL, PEN
-                                String writeTrace = dataMap.get("writeTrace").toString();  //NONE, PENCIL, PEN
-                                String bookCover = dataMap.get("bookCover").toString(); //CLEAN, DIRTY
-                                boolean naming = (boolean)dataMap.get("naming"); //true:이름있음, false:없음
-                                boolean discolor = (boolean)dataMap.get("discolor");   //변색, true:있음, false:없음
+                                String underbarTrace = dataMap.get("underbarTrace").toString();
+                                String writeTrace = dataMap.get("writeTrace").toString();
+                                String bookCover = dataMap.get("bookCover").toString();
+                                boolean naming = (boolean)dataMap.get("naming");
+                                boolean discolor = (boolean)dataMap.get("discolor");
                                 String imageURL = dataMap.get("imageURL").toString();
                                 bookItemBundle.add(new BookItem(title,author,UID,price,timeStamp,underbarTrace,writeTrace,bookCover,naming,discolor,imageURL));
                                 Log.i("Feed","Data Added, title : "+title);

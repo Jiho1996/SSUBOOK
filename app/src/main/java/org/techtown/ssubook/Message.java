@@ -67,7 +67,7 @@ public class Message extends AppCompatActivity
                 {
                     if(error != null)
                     {
-                        Log.w("ChatRoom", "Listen Failed",error);
+                        Log.w("Message", "Listen Failed",error);
                     }
                     else
                     {
@@ -101,7 +101,7 @@ public class Message extends AppCompatActivity
                                     ChatList = (ArrayList) dataMap.get("ChatList");
                                     UserList = (ArrayList) dataMap.get("UserList");
                                     lastChat = dataMap.get("LastChat").toString();
-                                    chatRoomItemBundle.add(new ChatRoomItem(UserList, lastChat));
+                                    chatRoomItemBundle.add(new ChatRoomItem(UserList, lastChat,userUID));
                                     Log.w("Message", "ChatRoom Load");
                             }
                         }
@@ -122,47 +122,5 @@ public class Message extends AppCompatActivity
 
     }
 
-    private void refresh()
-    {
-        FirebaseFirestore firebaseDB = FirebaseFirestore.getInstance();
-        String userUID;
-        CollectionReference chatRef = firebaseDB.collection("Chat");
 
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if(currentUser != null)
-        {
-            userUID = currentUser.getUid();
-            final Query chatRoomQuery = chatRef.whereArrayContains("UserList",userUID);
-            chatRoomQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
-            {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task)
-                {
-                    if (task.isSuccessful())
-                    {
-                        chatRoomItemBundle.clear();
-                        for (QueryDocumentSnapshot document : task.getResult()) //Task 종료 시 getResult는 QuerySnapShot을 return, QuerySnapShot은 Iterable이므로 for-each 문으로 QueryDocumentSnapshot으로 사용가능.
-                        {
-                            //각각의 document는 서로 다른 ChatRoom임
-
-                            //QueryDocumentSnapshot은 모두 document형, getData()로 Map<String,Object>를 return
-                            Map<String, Object> dataMap = document.getData();    //dataMap.get("ChatList")하면 ["UID","UID",..]된 ArrayList들이 나옴
-                            ArrayList<String> ChatList = (ArrayList) dataMap.get("ChatList");
-                            ArrayList<String> UserList = (ArrayList) dataMap.get("UserList");
-                            String lastChat = dataMap.get("LastChat").toString();
-                            chatRoomItemBundle.add(new ChatRoomItem(UserList, lastChat));
-                            Log.w("Message", "ChatRoom Load");
-                        }
-
-                        chatRoomAdapter.notifyDataSetChanged();
-                    }
-                    else
-                    {
-                        //작업 실패 시
-                        Log.w("Message", "Firestore Load Failed");
-                    }
-                }
-            });
-        }
-    }
 }

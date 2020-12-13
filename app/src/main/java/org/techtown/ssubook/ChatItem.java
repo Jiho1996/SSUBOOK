@@ -84,7 +84,7 @@ public class ChatItem implements Comparable<ChatItem>
                    {
                        sender=document.getData().get("sender").toString();
                        receiver=document.getData().get("sender").toString();
-                       timeStamp=((Timestamp)document.getData().get("timeStamp")).getSeconds();
+                       timeStamp=Long.parseLong(document.getData().get("timeStamp").toString());
                        contents=document.getData().get("sender").toString();
                    }
                }

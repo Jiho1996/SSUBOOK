@@ -21,11 +21,13 @@ public class ChatRoomItem implements Comparable<ChatRoomItem>
     private ArrayList<ChatItem> ChatList = new ArrayList<>(); //채팅 목록
     private String LastChat;
     private ChatItem Last_Chat;
+    private String me;
 
-    public ChatRoomItem(ArrayList<String> UserList, String LastChat)
+    public ChatRoomItem(ArrayList<String> UserList, String LastChat,String me)
     {
         this.UserList = UserList;
         this.LastChat = LastChat;
+        this.me=me;
     }
 
 
@@ -42,6 +44,16 @@ public class ChatRoomItem implements Comparable<ChatRoomItem>
         {
             this.ChatList.add(new ChatItem(chat));
         }
+    }
+
+    public String getMe()
+    {
+        return me;
+    }
+
+    public void setMe(String me)
+    {
+        this.me = me;
     }
 
     public String getLastChat()
@@ -89,5 +101,23 @@ public class ChatRoomItem implements Comparable<ChatRoomItem>
             return 1;
         else
             return 0;
+    }
+
+    public String getAnother()
+    {
+        int idx=0;
+        if(getUserList().contains(me))
+        {
+            idx = getUserList().indexOf(me);
+        }
+
+        if(idx==0)
+        {
+            return getUserList().get(1);
+        }
+        else
+        {
+            return getUserList().get(0);
+        }
     }
 }
