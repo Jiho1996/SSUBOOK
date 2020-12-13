@@ -85,7 +85,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
                     Log.i("in_FeedAdapter", Integer.toString(pos));
                     Log.i("in_FeedAdapter", feedItemBundle.get(pos).getTitle()); //제목.
                     Intent intent = new Intent(context2,Page.class);
-                    intent.putExtra("Title",feedItemBundle.get(pos).getUID());
+                    intent.putExtra("UID",feedItemBundle.get(pos).getUID());
                     context2.startActivity(intent);
                  }
             });
