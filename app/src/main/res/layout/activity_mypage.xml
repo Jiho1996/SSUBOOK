@@ -167,6 +167,33 @@
         android:layout_height="1dp"
         android:layout_marginTop="10dp"
       />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:onClick="onMessage">
+
+        <ImageView
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:layout_gravity="left"
+            android:adjustViewBounds="true"
+            android:maxWidth="150dp"
+            android:maxHeight="150dp"
+            android:src="@drawable/ic_baseline_chat_bubble_outline_24" />
+
+        <TextView
+            android:padding="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:singleLine="true"
+            android:text="쪽지함"
+            android:textSize="25dp" />
+
+    </LinearLayout>
 
 
     <RelativeLayout

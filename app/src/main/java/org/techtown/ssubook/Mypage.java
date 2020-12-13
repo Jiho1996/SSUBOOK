@@ -113,6 +113,10 @@ public class Mypage extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    public void onMessage( View v )
+    {
+        Intent intent = new Intent(Mypage.this, Message.class);
+        startActivity(intent);
+    }
 
 }
