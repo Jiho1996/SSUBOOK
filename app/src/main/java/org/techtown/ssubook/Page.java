@@ -77,6 +77,7 @@ public class Page extends AppCompatActivity {
 
         final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         final FirebaseFirestore firebaseDB = FirebaseFirestore.getInstance();
+
         firebaseDB.collection("Post").document(UID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
         {
             @Override
