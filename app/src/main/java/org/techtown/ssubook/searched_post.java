@@ -204,7 +204,7 @@ public class searched_post extends AppCompatActivity
                 startActivity(intent);
             }
         });
-
+        floatingBtn.hide();
 
     }
     private Boolean find_by_title(String title, String searched_title) {

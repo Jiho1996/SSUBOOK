@@ -26,19 +26,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 public class Mypage extends AppCompatActivity {
-    private RecyclerView feedRecyclerView;
-    private RecyclerView.Adapter feedAdapter;
-    private RecyclerView.LayoutManager feedManager;
-    private ActionBar feedActionbar;
-    private SwipeRefreshLayout swipeLayout;
-    private FloatingActionButton floatingBtn;
-    ArrayList<BookItem> bookItemBundle = new ArrayList<>();
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypage);
         setTitle("마이페이지");
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        //Log.d("abc", currentUser.getUid());
 
 
 
@@ -78,7 +76,7 @@ public class Mypage extends AppCompatActivity {
         Intent intent = new Intent();
         ComponentName componentName = new ComponentName (
                 "org.techtown.ssubook",
-                "org.techtown.ssubook.Post");
+                "org.techtown.ssubook.Post2");
         intent.setComponent(componentName);
         intent.putExtra("activity", 1);
         startActivity(intent);
