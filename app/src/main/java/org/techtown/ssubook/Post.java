@@ -8,6 +8,7 @@ import androidx.core.content.res.ResourcesCompat;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,26 +32,30 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 
 public class Post extends AppCompatActivity {
-    List<BookItem> booklist = new ArrayList<>();
+    ArrayList<BookItem> booklist = new ArrayList<>();
     BookItem book;
     String userID = "123";
     List<String> titles = new ArrayList<>();
     private ActionBar feedActionbar;
+    ArrayList<ListViewItem> book_list = new ArrayList<>();
+   Drawable drawable;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
         setTitle("Post");
+        drawable = getResources().getDrawable(R.drawable.ic_baseline_assignment_24);
 
         ListView listview;
         ListView listview2;
         final ListViewAdapter adapter;
-        ListViewAdapter adapter2;
+        final ListViewAdapter adapter2;
         adapter = new ListViewAdapter();
         adapter2 = new ListViewAdapter();
         listview = (ListView) findViewById(R.id.MyPostTab);
@@ -67,47 +72,47 @@ public class Post extends AppCompatActivity {
                 "2",
                 "관심있는 글2");
 
+
+
         FirebaseFirestore firebaseDB = FirebaseFirestore.getInstance();
-        firebaseDB.collection("Post").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        firebaseDB.collection("Post").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+        {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Map<String, Object> dataMap = document.getData();
-                        String title = dataMap.get("title").toString();
-                        String author = dataMap.get("author").toString();
-                        String UID = dataMap.get("UID").toString();
-                        int price = Integer.parseInt(String.valueOf(dataMap.get("price")));
-
-                        Object timeStamp_o = dataMap.get("timeStamp");
-                        long timeStamp = ((Timestamp) timeStamp_o).getSeconds();
-                        BookItem book = new BookItem(title, author, UID, price, timeStamp);
-                        booklist.add(book);
-                        Log.d("add", UID + title + author);
+            public void onComplete(@NonNull Task<QuerySnapshot> task)
+            {
+                if (task.isSuccessful())
+                {
+                    for (QueryDocumentSnapshot document : task.getResult()) //Task 종료 시 getResult는 QuerySnapShot을 return, QuerySnapShot은 Iterable이므로 for-each 문으로 QueryDocumentSnapshot으로 사용가능.
+                    {
+                        Map<String,Object> dataMap = document.getData();
+                        String title = dataMap.get("title").toString();   //제목
+                        String author = dataMap.get("author").toString();  //use firebase UID, 저자
+                        String UID = dataMap.get("UID").toString(); //게시글 UID
+                        int price = Integer.parseInt(dataMap.get("price").toString());  //가격
+                        book_list.add(new ListViewItem(drawable,title,author));
+                        Log.i("Post","Data Added, title : "+book_list.get(0).getTitle());
                     }
-                   // adapter.notifyDataSetChanged();
-                } else {
-
+                    adapter.notifyDataSetChanged();
+                    adapter2.notifyDataSetChanged();
                 }
+                else
+                {
+                    Log.w("Feed","Feed Get FAILED");
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener()
+        {
+            @Override
+            public void onFailure(@NonNull Exception e)
+            {
+                Log.w("Feed","Feed Get FAILED",e);
             }
         });
 
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_baseline_assignment_24),
+                book_list.get(0).getTitle(),
+                book_list.get(0).getDesc()) ;
 
-        /*
-        ArrayList<Integer> finds= find_my_post(booklist, userID);
-
-        for(int i=0; i<finds.size(); i++){
-            Object obj = booklist.get(i);
-            BookItem book= (BookItem)obj;
-
-            adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_baseline_assignment_24),
-                    book.getTitle(),
-                    book.getContents()) ;
-        }
-*/
-        //userID를 찾는 과정....
-        //ArrayList<String> interested_post = new ArrayList<>();
-        //ArrayList<Integer> finds= find_interested_post(booklist, interested_post);
 
 
         TabHost tabHost = findViewById(R.id.host);
@@ -146,50 +151,4 @@ public class Post extends AppCompatActivity {
         }
     }
 
-
-    private ArrayList<Integer> find_my_post(ArrayList<BookItem> booklist, String UID) {
-        ArrayList<Integer> finds = new ArrayList();
-        for (int i = 0; i < booklist.size(); i++) {
-            Object obj = booklist.get(i);
-            BookItem book = (BookItem) obj;
-            if (book.getUID().equals(UID))
-                finds.add(i);
-        }
-        return finds;
-    }
-/*
-    private ArrayList<Integer> find_interested_post(ArrayList<BookItem> booklist, ArrayList<String> interested_post){ //게시글에 고유 번호 있다는 전제.
-        ArrayList<Integer> finds= new ArrayList();
-        for(int i=0; i<interested_post.size(); i++) {
-            Object obj = interested_post.get(i);
-            String BookId=(String)obj;
-            for (int j = 0; j < booklist.size(); j++) {
-                Object obj2 = booklist.get(j);
-                BookItem book= (BookItem)obj2;
-                if(book.getBookID().equals(BookId))
-                    finds.add(j);
-            }
-            obj=null;
-            BookId=null;
-        }
-        return finds;
-    }
-
-    private String find_by_title(ArrayList<BookItem> booklist, String title){
-        for(int i=0; i<booklist.size(); i++){
-            Object obj = booklist.get(i);
-            BookItem book= (BookItem)obj;
-            if(book.getTitle().equals(title))
-                return book.getTitle();
-        }
-        return null;
-    }
-*/
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d("add", Integer.toString(booklist.size()));
-        Log.d("add", booklist.get(0).getAuthor());
-    }
 }
