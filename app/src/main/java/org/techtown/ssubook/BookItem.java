@@ -22,6 +22,7 @@ public class BookItem implements Comparable<BookItem>
 
     //게시글 내용
     private String contents;    //내용
+    private String imageURL;
     private ArrayList<String> imageURLs = new ArrayList<>();    //사진 URL이 담긴 ArrayList
 
     public BookItem(String title, String author, String UID, int price, long timeStamp)
@@ -38,7 +39,7 @@ public class BookItem implements Comparable<BookItem>
         discolor=false;
     }
 
-    public BookItem(String title, String author, String UID, int price, long timeStamp, String underbarTrace, String writeTrace, String bookCover, boolean naming, boolean discolor)
+    public BookItem(String title, String author, String UID, int price, long timeStamp, String underbarTrace, String writeTrace, String bookCover, boolean naming, boolean discolor,String imageURL)
     {
         this.title=title;
         this.author=author;
@@ -50,6 +51,7 @@ public class BookItem implements Comparable<BookItem>
         this.bookCover=bookCover;
         this.naming=naming;
         this.discolor=discolor;
+        this.imageURL=imageURL;
     }
 
     public String getTitle()
@@ -110,6 +112,16 @@ public class BookItem implements Comparable<BookItem>
     public String getContents()
     {
         return contents;
+    }
+
+    public String getImageURL()
+    {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL)
+    {
+        this.imageURL = imageURL;
     }
 
     public String getTimeString() //String으로 TimeStamp 변환
