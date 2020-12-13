@@ -98,7 +98,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
                             {
                                 String nickname = document.getData().get("nickname").toString();
                                 String photo = document.getData().get("photo").toString();
-                                if((nickname!=null)&&(nickname.equals("")&&(nickname.length()>0)))
+                                if((nickname!=null)&&(!nickname.equals("")&&(nickname.length()>0)))
                                 {
                                     holder.titleView.setText(nickname);
                                 }
@@ -107,7 +107,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
                                     holder.titleView.setText("상대방");
                                 }
 
-                                if((photo!=null)&&(photo.equals("")&&(photo.length()>0)))
+                                if((photo!=null)&&(!photo.equals("")&&(photo.length()>0)))
                                 {
                                     Glide.with(holder.opponentImageView.getContext()).load(photo).into(holder.opponentImageView);
                                 }

@@ -81,7 +81,7 @@ public class Message extends AppCompatActivity
                             {
                                 case MODIFIED:
                                     dataMap = doc.getDocument().getData();    //dataMap.get("ChatList")하면 ["UID","UID",..]된 ArrayList들이 나옴
-                                    ChatList = (ArrayList) dataMap.get("ChatList");
+                                    //ChatList = (ArrayList) dataMap.get("ChatList");
                                     UserList = (ArrayList) dataMap.get("UserList");
                                     lastChat = dataMap.get("LastChat").toString();
                                     for (ChatRoomItem chat : chatRoomItemBundle)
@@ -98,10 +98,10 @@ public class Message extends AppCompatActivity
                                 case ADDED:
                                 default:
                                     dataMap = doc.getDocument().getData();    //dataMap.get("ChatList")하면 ["UID","UID",..]된 ArrayList들이 나옴
-                                    ChatList = (ArrayList) dataMap.get("ChatList");
+                                    //ChatList = (ArrayList) dataMap.get("ChatList");
                                     UserList = (ArrayList) dataMap.get("UserList");
                                     lastChat = dataMap.get("LastChat").toString();
-                                    chatRoomItemBundle.add(new ChatRoomItem(UserList, lastChat,userUID));
+                                    chatRoomItemBundle.add(new ChatRoomItem(UserList, lastChat, userUID));
                                     Log.w("Message", "ChatRoom Load");
                             }
                         }

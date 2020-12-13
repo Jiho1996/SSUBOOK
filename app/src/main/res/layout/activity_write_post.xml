@@ -60,6 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@android:color/transparent"
+                android:digits="0123456789"
                 android:hint="가격"
                 android:inputType="text"/>
 
@@ -86,6 +87,7 @@
                     android:id="@+id/radio_underline_none"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="없음"/>
                 <RadioButton
                     android:id="@+id/radio_underline_pencil"
@@ -123,6 +125,7 @@
                     android:id="@+id/radio_write_none"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="없음"/>
                 <RadioButton
                     android:id="@+id/radio_write_pencil"
@@ -160,6 +163,7 @@
                     android:id="@+id/radio_clean_true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="깨끗함"/>
                 <RadioButton
                     android:id="@+id/radio_clean_false"
@@ -192,6 +196,7 @@
                     android:id="@+id/radio_naming_true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="있음"/>
                 <RadioButton
                     android:id="@+id/radio_naming_false"
@@ -224,6 +229,7 @@
                     android:id="@+id/radio_discolor_true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="있음"/>
                 <RadioButton
                     android:id="@+id/radio_discolor_false"
