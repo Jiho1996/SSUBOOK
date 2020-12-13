@@ -4,10 +4,13 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-feature android:name="android.hardware.camera2" android:required="false" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera2"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -17,7 +20,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".WritePost"></activity>
+        <activity android:name=".Page">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".WritePost" />
         <activity android:name=".ChattingRoom" />
         <activity android:name=".Message" />
         <activity android:name=".StartActivity">
@@ -27,7 +37,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".searched_post"
+        <activity
+            android:name=".searched_post"
             android:theme="@style/TaekTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +46,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".search"
+        <activity
+            android:name=".search"
             android:theme="@style/TaekTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,7 +55,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Post"
+        <activity
+            android:name=".Post"
             android:theme="@style/TaekTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,7 +64,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Mypage"
+        <activity
+            android:name=".Mypage"
             android:theme="@style/TaekTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
