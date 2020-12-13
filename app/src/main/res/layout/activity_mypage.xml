@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:id="@+id/my_page_main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
@@ -162,7 +165,30 @@
         android:background="#909090"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_margin="10dp"/>
+        android:layout_marginTop="10dp"
+      />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@id/my_page_main">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_nav_home"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#ffffff"
+            app:itemIconSize="40dp"
+            app:itemIconTint="@drawable/item_color"
+            app:labelVisibilityMode="unlabeled"
+            android:layout_gravity="bottom"
+            app:layout_constraintBottom_toBottomOf="@id/my_page_main"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/bottom_nav_home" />
+    </LinearLayout>
 
 
 </LinearLayout>
