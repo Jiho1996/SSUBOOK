@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="홈 피드"
+        android:id="@+id/menu_home_feed"
+        android:icon="@drawable/ic_home_black_24dp" />
+
+    <item
+        android:title="검색"
+        android:id="@+id/menu_lecture_list"
+        android:icon="@drawable/ic_list_black_24dp" />
+
+    <item
+        android:title="마이페이지"
+        android:id="@+id/menu_profile"
+        android:icon="@drawable/ic_person_black_24dp" />
+</menu>
