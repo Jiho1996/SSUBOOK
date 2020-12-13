@@ -1,6 +1,7 @@
 package org.techtown.ssubook;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,12 +15,17 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
@@ -87,10 +93,10 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
-                            Toast.makeText(LoginActivity.this, "로그인 성공.", Toast.LENGTH_LONG).show();
-                            //Intent intent = new Intent(LoginActivity.this, Mypage.class);
-                            Intent intent = new Intent(LoginActivity.this, Feed.class);
+                            Intent intent = new Intent(LoginActivity.this, Message.class);
                             startActivity(intent);
+                            Toast.makeText(LoginActivity.this, "로그인 성공.", Toast.LENGTH_LONG).show();
+
 
                         } else {
                             // If sign in fails, display a message to the user.

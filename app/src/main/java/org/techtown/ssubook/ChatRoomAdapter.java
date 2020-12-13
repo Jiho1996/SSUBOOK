@@ -10,15 +10,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 
 public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRoomViewHolder>
 {
-    ArrayList<BookItem> feedItemBundle = new ArrayList<>();
+    ArrayList<ChatRoomItem> chatRoomItemBundle = new ArrayList<>();
     Context mContext;
-    public ChatRoomAdapter(ArrayList<BookItem> bundle)
+    public ChatRoomAdapter(ArrayList<ChatRoomItem> bundle)
     {
-        this.feedItemBundle = bundle;
+        this.chatRoomItemBundle = bundle;
     }
 
     @NonNull
@@ -27,7 +32,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
     {
         Context mContext = parent.getContext();
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.recycler_feed_item,parent,false);
+        View view = inflater.inflate(R.layout.recycler_chat_room,parent,false);
         ChatRoomViewHolder holder = new ChatRoomViewHolder(view);
         return holder;
     }
@@ -36,35 +41,37 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
     public void onBindViewHolder(@NonNull ChatRoomViewHolder holder, int position)
     {
         //이미지 삽입 하는곳 (주석지우고 넣으삼)
-        BookItem curItm = feedItemBundle.get(position);
+        ChatRoomItem curItm = chatRoomItemBundle.get(position);
 
-        holder.titleView.setText(curItm.getTitle());
-        holder.dateView.setText(curItm.getTimeString());
-        holder.priceView.setText(curItm.getPrice()+"원");
-        //이미지뷰는 Firebase 작업 후 구현
-        //holder.mainImageView.
+        holder.titleView.setText(curItm.getRecentChat().getOpponentNickname());
+        holder.dateView.setText(curItm.getRecentChat().getTimeString());
+        holder.maintextView.setText(curItm.getRecentChat().getContentsOutside());
+        if((curItm.getRecentChat().getOpponentPhoto().length()>0)&&(curItm.getRecentChat().getOpponentPhoto()!="")&&(curItm.getRecentChat().getOpponentPhoto()!=null))
+        {
+            Glide.with(holder.opponentImageView.getContext()).load(curItm.getRecentChat().getOpponentPhoto()).into(holder.opponentImageView);
+        }
     }
 
     @Override
     public int getItemCount()
     {
-        return feedItemBundle.size();
+        return chatRoomItemBundle.size();
     }
 
     public class ChatRoomViewHolder extends RecyclerView.ViewHolder
     {
         TextView titleView;
         TextView dateView;
-        TextView priceView;
-        ImageView mainImageView;
+        TextView maintextView;
+        ImageView opponentImageView;
 
         public ChatRoomViewHolder(@NonNull View v)
         {
             super(v);
-            //titleView = v.findViewById(R.id.recyclerViewChatRoom_Title);
-            //dateView = v.findViewById(R.id.recyclerViewChatRoom_Date);
-           // priceView = v.findViewById(R.id.recyclerViewChatRoom_Price);
-            //mainImageView = v.findViewById(R.id.recyclerViewChatRoom_Image);
+            titleView = v.findViewById(R.id.recycler_chatRoom_title);
+            dateView = v.findViewById(R.id.recycler_chatRoom_Date);
+            maintextView = v.findViewById(R.id.recycler_chatRoom_mainText);
+            opponentImageView = v.findViewById(R.id.recycler_chatRoom_image);
         }
     }
 }

@@ -1,24 +1,33 @@
 package org.techtown.ssubook;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Message extends AppCompatActivity
@@ -28,22 +37,28 @@ public class Message extends AppCompatActivity
     private RecyclerView chatRoomRecyclerView;
     private RecyclerView.Adapter chatRoomAdapter;
     private RecyclerView.LayoutManager chatRoomManager;
+    private ArrayList<ChatItem> chatItems = new ArrayList<>();
+    HashMap<String,ChatRoomItem> chatMap = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
-
-
+        msgActionbar = getSupportActionBar();
+        msgActionbar.setDisplayHomeAsUpEnabled(false);   //상단바에 뒤로가기버튼
+        msgActionbar.setTitle("쪽지");
+        chatRoomRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_message);
         //Firestore 데이터 읽어오기
-        FirebaseFirestore firebaseDB = FirebaseFirestore.getInstance();
+        final FirebaseFirestore firebaseDB = FirebaseFirestore.getInstance();
         //Uid 가져오기
         final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if(currentUser != null)
         {
-            String userUID = currentUser.getUid();
+            final String userUID = currentUser.getUid();
             //채팅방 쿼리 작업
-            CollectionReference chatRef = firebaseDB.collection("ChatRooms");
+            final CollectionReference chatRef = firebaseDB.collection("Chat");
+
             Query chatRoomQuery = chatRef.whereArrayContains("UserList",userUID);
             chatRoomQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
             {
@@ -58,16 +73,32 @@ public class Message extends AppCompatActivity
 
                             //QueryDocumentSnapshot은 모두 document형, getData()로 Map<String,Object>를 return
                             Map<String,Object> dataMap = document.getData();    //dataMap.get("ChatList")하면 ["UID","UID",..]된 ArrayList들이 나옴
-
+                            ArrayList<String> ChatList = (ArrayList) dataMap.get("ChatList");
+                            ArrayList<String> UserList = (ArrayList) dataMap.get("UserList");
+                            String lastChat = dataMap.get("LastChat").toString();
+                            chatRoomItemBundle.add(new ChatRoomItem(UserList,ChatList,true));
+                            Log.w("Message","ChatRoom Load");
                         }
+
+                        Collections.sort(chatRoomItemBundle);   //TimeStamp를 사용해 최신순 정렬
+                        chatRoomAdapter.notifyDataSetChanged();
                     }
                     else
                     {
                         //작업 실패 시
+                        Log.w("Message","Firestore Load Failed");
                     }
                 }
             });
+
         }
+
+        chatRoomRecyclerView.setHasFixedSize(true);
+        chatRoomManager = new LinearLayoutManager(this);
+
+        chatRoomRecyclerView.setLayoutManager(chatRoomManager);
+        chatRoomAdapter = new ChatRoomAdapter(chatRoomItemBundle);
+        chatRoomRecyclerView.setAdapter(chatRoomAdapter);
 
 
     }

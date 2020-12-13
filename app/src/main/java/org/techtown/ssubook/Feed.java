@@ -51,7 +51,8 @@ public class Feed extends AppCompatActivity
         feedRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_feed);
         floatingBtn = (FloatingActionButton) findViewById(R.id.floating_feed_btn);
         feedActionbar = getSupportActionBar();
-
+        feedActionbar.setDisplayHomeAsUpEnabled(false);   //상단바에 뒤로가기버튼
+        floatingBtn.show();
         //FireStore 데이터 읽어오기
         FirebaseFirestore firebaseDB = FirebaseFirestore.getInstance();
         firebaseDB.collection("Post").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()

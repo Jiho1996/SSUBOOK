@@ -87,8 +87,8 @@ public class ChattingRoom extends AppCompatActivity
                             String reciever = dataMap.get("reciever").toString();
                             long timeStamp = Long.parseLong(dataMap.get("timeStamp").toString());
                             String contents = dataMap.get("contents").toString();
-
-                            ChatItem chatItem = new ChatItem(sender,reciever,timeStamp,contents);
+                            String chatUID = document.getId();
+                            ChatItem chatItem = new ChatItem(sender,reciever,timeStamp,contents,chatUID);
                             chatItemBundle.add(chatItem);
                         }
                     }
@@ -100,7 +100,7 @@ public class ChattingRoom extends AppCompatActivity
             });
         }
 
-        Collections.sort(chatItemBundle);
+
 
         msgActionbar = getSupportActionBar();
         msgActionbar.setDisplayHomeAsUpEnabled(true);   //상단바에 뒤로가기버튼
@@ -207,12 +207,13 @@ public class ChattingRoom extends AppCompatActivity
                             String reciever = addedDate.get("reciever").toString();
                             long timeStamp = Long.parseLong(addedDate.get("timeStamp").toString());
                             String contents = addedDate.get("contents").toString();
-
-                            ChatItem chatItem = new ChatItem(sender,reciever,timeStamp,contents);
+                            String chatUID = doc.getDocument().getId();
+                            ChatItem chatItem = new ChatItem(sender,reciever,timeStamp,contents,chatUID);
                             chatItemBundle.add(chatItem);
-                            adapter.notifyDataSetChanged();
+
                         }
                     }
+                    adapter.notifyDataSetChanged();
                 }
             }
         });

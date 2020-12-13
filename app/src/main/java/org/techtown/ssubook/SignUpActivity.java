@@ -2,6 +2,7 @@ package org.techtown.ssubook;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -12,13 +13,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 
@@ -82,9 +87,30 @@ public class SignUpActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // 회원가입 성공시
                             Log.d(TAG, "createUserWithPhone:success");
-                            Toast.makeText(SignUpActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                            startActivity(intent);
+                            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+                            FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
+                            Map<String, Object> userData = new HashMap<>();
+                            userData.put("interested_post",new String[1]);
+                            if(currentUser.getDisplayName().length()>0)
+                                userData.put("nickname",currentUser.getDisplayName());
+                            else
+                                userData.put("nickname","");
+                            if(!currentUser.getPhotoUrl().equals(Uri.EMPTY))
+                                userData.put("photo",currentUser.getPhotoUrl().toString());
+                            else
+                                userData.put("photo","");
+
+                            firestoreDB.collection("User").document(currentUser.getUid()).set(userData).addOnSuccessListener(new OnSuccessListener<Void>()
+                            {
+                                @Override
+                                public void onSuccess(Void aVoid)
+                                {
+                                    Toast.makeText(SignUpActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+
                         } else {
 
                             if(task.getException() != null ) {
