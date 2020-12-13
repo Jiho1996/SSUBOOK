@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +21,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
 
 public class Page extends AppCompatActivity {
     TextView title_text;
@@ -198,5 +201,9 @@ public class Page extends AppCompatActivity {
         });
 
 
+    }
+    public void onInterested( View v )
+    {
+        Toast.makeText( this, "intersted에 추가되었습니다.", Toast.LENGTH_LONG ).show();
     }
 }

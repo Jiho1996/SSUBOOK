@@ -82,7 +82,6 @@ public class Post2 extends AppCompatActivity {
                         {
                             String nickname = document.getData().get("nickname").toString();
                             feedActionbar.setTitle( (nickname) + "회원님");
-                            interested2=document.getData().get("interested").toString();
                         }
                         else
                         {

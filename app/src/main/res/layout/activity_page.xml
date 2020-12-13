@@ -252,7 +252,8 @@
             android:layout_height="57dp"
             android:layout_gravity="left"
             android:adjustViewBounds="true"
-            android:src="@drawable/ic_baseline_star_24" />
+            android:src="@drawable/ic_baseline_star_24"
+            android:onClick="onInterested"/>
         <View
             android:layout_width="2dp"
             android:layout_height="match_parent"

@@ -13,9 +13,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -30,6 +32,7 @@ public class Mypage extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private ImageButton feedButton;
     private ImageButton searchButton;
+    ImageView profileImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +40,7 @@ public class Mypage extends AppCompatActivity {
         setTitle("마이페이지");
         feedButton = (ImageButton) findViewById(R.id.btn_feed);
         searchButton = (ImageButton) findViewById(R.id.btn_search);
-
+        profileImage=(ImageView)findViewById(R.id.myprofile);
 
         firebaseAuth = FirebaseAuth.getInstance();
         final FirebaseUser currentUser = firebaseAuth.getCurrentUser();
@@ -61,6 +64,10 @@ public class Mypage extends AppCompatActivity {
                         {
                             String nickname = document.getData().get("nickname").toString();
                             textView.setText(nickname);
+
+                            String profilePhoto = document.getData().get("photo").toString();
+                            if((!profilePhoto.equals(""))&&(profilePhoto.length()>0)&&(profilePhoto!=null))
+                                Glide.with(getApplicationContext()).load(profilePhoto).into(profileImage); //이게 없으면 기본적으로 제공한 아이콘이 보인다.
                         }
                         else
                         {
