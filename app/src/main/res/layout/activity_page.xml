@@ -5,11 +5,9 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/school_text"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_weight="1"
         android:padding="5dp"
-        android:singleLine="true"
         android:background="#555555"
         android:textSize="20dp" />
 
@@ -26,8 +24,6 @@
             android:layout_gravity="left"
             android:layout_weight="1"
             android:adjustViewBounds="true"
-            android:maxWidth="150dp"
-            android:maxHeight="150dp"
             android:src="@drawable/ic_baseline_perm_identity_24" />
 
         <LinearLayout
@@ -43,7 +39,7 @@
                 android:layout_weight="2"
                 android:singleLine="true"
                 android:id="@+id/school_text"
-                android:text="Name"
+                android:text="망령 99학번"
                 android:textSize="20dp" />
 
             <TextView
@@ -53,7 +49,7 @@
                 android:layout_weight="1"
                 android:id="@+id/major_text"
                 android:singleLine="true"
-                android:text="School/department" />
+                android:text="컴퓨터학부" />
         </LinearLayout>
 
 
@@ -73,8 +69,9 @@
         android:text="책 상태"
         android:textSize="20dp"/>
 
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
@@ -82,119 +79,150 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
+            android:layout_weight="2"
             android:text="밑줄 흔적"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:gravity="center_horizontal" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp"
             android:text="없음"
+            android:layout_weight="1"
             android:textSize="15dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp"
             android:text="연필/샤프"
+            android:layout_weight="1"
             android:textSize="15dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp"
             android:text="볼펜/형광펜"
+            android:layout_weight="1"
             android:textSize="15dp" />
 
-    </LinearLayout>
-    <LinearLayout
+    </LinearLayout><LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_weight="2"
+        android:text="필기 흔적"
+        android:textSize="15dp"
+        android:gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="없음"
+        android:layout_weight="1"
+        android:textSize="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="연필/샤프"
+        android:layout_weight="1"
+        android:textSize="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="볼펜/형광펜"
+        android:layout_weight="1"
+        android:textSize="15dp" />
+
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="141dp"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:padding="5dp"
-            android:text="필기 흔적"
+            android:text="겉표지 "
             android:textSize="15dp" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="64dp"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="없음"
-            android:textSize="15dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="연필/샤프"
-            android:textSize="15dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="볼펜/형광펜"
-            android:textSize="15dp" />
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="겉표지"
-            android:textSize="15dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
             android:text="깨끗함"
             android:textSize="15dp" />
 
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="깨끗하지 않음"
+            android:text="깨끗하지않음"
             android:textSize="15dp" />
 
     </LinearLayout>
     <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="141dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="5dp"
+        android:text="이름 기입 "
+        android:textSize="15dp" />
+
+    <TextView
+        android:layout_width="64dp"
+        android:layout_height="wrap_content"
+        android:text="없음"
+        android:textSize="15dp" />
+
+
+    <TextView
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="있음"
+        android:textSize="15dp" />
+
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="141dp"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:padding="5dp"
-            android:text="페이지 변색"
+            android:text="페이지 변색 "
             android:textSize="15dp" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="64dp"
             android:layout_height="wrap_content"
-            android:padding="5dp"
             android:text="없음"
             android:textSize="15dp" />
 
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp"
             android:text="있음"
             android:textSize="15dp" />
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
@@ -210,7 +238,7 @@
             android:layout_height="57dp"
             android:layout_gravity="left"
             android:adjustViewBounds="true"
-            android:src="@drawable/ic_baseline_perm_identity_24" />
+            android:src="@drawable/ic_baseline_star_24" />
         <View
             android:layout_width="2dp"
             android:layout_height="match_parent"
@@ -220,17 +248,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:textSize="40dp"
             android:layout_weight="1"
+            android:gravity="center_horizontal"
             android:text="10000원" />
 
         <Button
             android:id="@+id/logOut_button"
-            android:layout_height="57dp"
-            android:padding="20dp"
             android:layout_width="wrap_content"
-            android:text="쪽지로 거래 시작"
-            android:layout_weight="1" />
-
+            android:layout_height="57dp"
+            android:text="쪽지로 거래 시작" />
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -238,8 +265,9 @@
         android:layout_centerInParent="true"
         android:background="#000000"/>
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text=" 가나다라마바사아자차카마타파하"
-        android:textSize="15dp" />
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+        android:textSize="15dp"
+        android:minLines="4"/>
+</LinearLayout>
