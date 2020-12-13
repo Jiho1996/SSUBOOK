@@ -124,7 +124,7 @@ public class Page extends AppCompatActivity {
                             low2cos2.setTypeface(null, Typeface.BOLD);
                         else
                             low2cos1.setTypeface(null, Typeface.BOLD);
-
+//ㅁㅁㄴ
 
                         if(bookCover.equals("CLEAN"))
                             low3cos1.setTypeface(null, Typeface.BOLD);
