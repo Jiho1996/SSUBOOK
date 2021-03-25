@@ -4,6 +4,7 @@ Used book transaction application (2020 User Interface and Practical Project)
 #기획 의도
 
 대학 서적을 전문적으로 거래하는 Application 제작
+
 #작품 설명
 
 대학생들이 중고 대학 서적을 거래할 수 있는 플랫폼을 제공한다.
