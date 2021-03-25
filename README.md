@@ -1,5 +1,5 @@
 # SSUBOOK
-Used book transaction application (2020 User Interface and Practical Project)
+Used book transaction application 
 
 ## 기획 의도
 
@@ -13,3 +13,5 @@ Used book transaction application (2020 User Interface and Practical Project)
 
 당근마켓과 달리, 책 이외의 물품이 없다. 
 뿐만 아니라, 대학서적 거래 시장이 없기 때문에 확실한 타겟층 확보 가능
+
+
