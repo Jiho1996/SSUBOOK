@@ -15,9 +15,17 @@ Used book transaction application
 뿐만 아니라, 대학서적 거래 시장이 없기 때문에 확실한 타겟층 확보 가능  
 
 
-  <h3 align = "center"> 메인화면</h3> 
-  ---
+  <h3 align = "center"> 메인화면</h3>
+  
   
   <p align="center">
-	<img src="https://user-images.githubusercontent.com/65906458/112671428-7c3c3280-8ea5-11eb-8e82-307cb6928c21.png" alt="kingdom"/>
+	<img src="https://user-images.githubusercontent.com/65906458/112671428-7c3c3280-8ea5-11eb-8e82-307cb6928c21.png" />
 </p>
+
+  <h3 align = "center"> 로그인 </h3>
+  
+  
+  <p align="center">
+	<img src="https://user-images.githubusercontent.com/65906458/112672998-8c551180-8ea7-11eb-824b-53405aa8127a.png" />
+</p>
+
