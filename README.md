@@ -14,7 +14,10 @@ Used book transaction application
 당근마켓과 달리, 책 이외의 물품이 없다. 
 뿐만 아니라, 대학서적 거래 시장이 없기 때문에 확실한 타겟층 확보 가능  
 
-
+<br>
+<br>
+<br>
+<br>
   <h3 align = "center"> 메인화면</h3>
   
   
@@ -28,4 +31,18 @@ Used book transaction application
   <p align="center">
 	<img src="https://user-images.githubusercontent.com/65906458/112672998-8c551180-8ea7-11eb-824b-53405aa8127a.png" />
 </p>
+
+  <h3 align = "center"> 회원가입 </h3>
+  
+  <p align="center">
+	<img src="https://user-images.githubusercontent.com/65906458/112672998-8c551180-8ea7-11eb-824b-53405aa8127a.png" />
+</p>
+
+
+  <h3 align = "center"> 게시글 </h3>
+  
+  <p align="center">
+	<img src="https://user-images.githubusercontent.com/65906458/112673325-ee157b80-8ea7-11eb-89b0-2ccce215ebfb.png" />
+</p>
+
 
